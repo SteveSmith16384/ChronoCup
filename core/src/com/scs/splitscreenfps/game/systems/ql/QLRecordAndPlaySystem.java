@@ -24,7 +24,7 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 	private LinkedList<AbstractRecordData> dataBeingRecordedThisPhase = new LinkedList<AbstractRecordData>();
 	private LinkedList<AbstractRecordData> dataToBePlayedBack = new LinkedList<AbstractRecordData>();
 	private LinkedList<AbstractRecordData> dataHasBeenPlayedBack = new LinkedList<AbstractRecordData>();
-	
+
 	private Iterator<AbstractRecordData> rewindIterator;
 
 	public QLRecordAndPlaySystem(BasicECS _ecs, QuantumLeagueLevel _level) {
@@ -76,12 +76,15 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 			}
 		} else {
 			if (rewindIterator != null) { // todo - why check this?
-				if (rewindIterator.hasNext()) {
-					AbstractRecordData data = rewindIterator.next();
-					processReverseEvent(data);
-				} else {
-					rewindIterator = null;
-					level.nextGamePhase();
+				for (int i=0 ; i<10 ; i++) {
+					if (rewindIterator.hasNext()) {
+						AbstractRecordData data = rewindIterator.next();
+						processReverseEvent(data);
+					} else {
+						rewindIterator = null;
+						level.nextGamePhase();
+						break;
+					}
 				}
 			}
 		}
@@ -107,11 +110,11 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 				//Settings.p("Shadow walking");
 			}
 			posData.position.set(data.position);
-			
+
 			if (posData.position.x == 7) {
 				Settings.p("Wrong!");
 			}
-			
+
 			posData.angle_degs = data.direction;
 		} else if (abstract_data.cmd == AbstractRecordData.CMD_BULLET_FIRED) {
 			BulletFiredRecordData data = (BulletFiredRecordData)abstract_data;
@@ -159,7 +162,7 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 				/*if (posData.position.x == 7) {
 					Settings.p("Wrong!");
 				}*/
-				
+
 			}
 		}
 	}

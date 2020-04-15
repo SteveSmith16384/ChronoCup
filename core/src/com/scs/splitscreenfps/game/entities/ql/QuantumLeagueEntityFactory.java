@@ -72,7 +72,7 @@ public class QuantumLeagueEntityFactory {
 		e.addComponent(pos);
 
 		HasDecal hasDecal = new HasDecal();
-		hasDecal.decal = GraphicsHelper.DecalHelper("quantumleague/laser_bolt.png", .4f);
+		hasDecal.decal = GraphicsHelper.DecalHelper("quantumleague/laser_bolt.png", 0.1f);
 		hasDecal.decal.setPosition(pos.position);
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = false;

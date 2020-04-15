@@ -35,10 +35,8 @@ import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextIn3DSpaceSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
 import com.scs.splitscreenfps.game.systems.MovementSystem;
-import com.scs.splitscreenfps.game.systems.PickupDropSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
-import com.scs.splitscreenfps.game.systems.RespawnSystem;
 import com.scs.splitscreenfps.pregame.PreGameScreen;
 
 import ssmith.libgdx.GridPoint2Static;
@@ -47,7 +45,7 @@ public class Game implements IModule {
 
 	private BillBoardFPS_Main main;
 	private SpriteBatch batch2d;
-	public BitmapFont font_small, font_med, font_large;// change to getFont()
+	public BitmapFont font_small, font_med, font_large;// todo - change to getFont()
 	public final ViewportData[] viewports;
 
 	public AbstractPlayersAvatar[] players;
@@ -63,7 +61,6 @@ public class Game implements IModule {
 	// Specific systems 
 	public CollisionCheckSystem collCheckSystem;
 	private DrawModelSystem drawModelSystem;
-	public RespawnSystem respawnSystem;
 
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
@@ -126,12 +123,9 @@ public class Game implements IModule {
 		ecs.addSystem(new DrawTextSystem(ecs, this, batch2d));
 		ecs.addSystem(new AnimationSystem(ecs));
 		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this, this.batch2d));
-		this.drawModelSystem = new DrawModelSystem(this, ecs); 
+		this.drawModelSystem = new DrawModelSystem(this, ecs);
 		ecs.addSystem(this.drawModelSystem);
-		ecs.addSystem(new PickupDropSystem(ecs, this));
 		ecs.addSystem(new DrawTextIn3DSpaceSystem(ecs, this, batch2d));
-		respawnSystem = new RespawnSystem(ecs, this); 
-		ecs.addSystem(respawnSystem);
 	}
 
 
@@ -168,12 +162,10 @@ public class Game implements IModule {
 
 		this.ecs.events.clear();
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
-		this.respawnSystem.process();
 		this.ecs.addAndRemoveEntities();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
 		this.ecs.getSystem(MovementSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
-		this.ecs.getSystem(PickupDropSystem.class).process();
 		this.ecs.getSystem(CycleThruDecalsSystem.class).process();
 		this.ecs.getSystem(CycleThroughModelsSystem.class).process();
 

@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class EntityMovedRecordData extends AbstractRecordData {
 
-	public int entityId;
+	public int entityId; // todo - store actual entity!
 	public Vector3 position = new Vector3();
 	public float direction;
 	

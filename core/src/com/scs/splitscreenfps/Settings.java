@@ -29,7 +29,7 @@ public class Settings {
 	
 	public static final String TITLE = "Chrono Cup";
 
-	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 1024;
+	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 512;
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
 
 	public static Properties prop;

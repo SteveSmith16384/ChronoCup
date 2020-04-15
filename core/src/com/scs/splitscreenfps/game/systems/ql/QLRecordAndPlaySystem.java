@@ -67,9 +67,11 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 				PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 				AnimatedComponent anim = (AnimatedComponent)entity.getComponent(AnimatedComponent.class);
 				if (posData.position.equals(data.position)) {
-					anim.next_animation = anim.walk_anim_name;
-				} else {
 					anim.next_animation = anim.idle_anim_name;
+					Settings.p("Shadow Idle");
+				} else {
+					anim.next_animation = anim.walk_anim_name;
+					Settings.p("Shadow walking");
 				}
 				posData.position.set(data.position);
 				posData.angle_degs = data.direction;
@@ -94,7 +96,7 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		if (level.isGamePhase()) {
-			// Save entities position etc...
+			// Record entities position etc...
 			if (level.qlPhaseSystem.phase_num_012 < 2) {
 				IsRecordable isRecordable = (IsRecordable)entity.getComponent(IsRecordable.class);
 				if (isRecordable.active) {

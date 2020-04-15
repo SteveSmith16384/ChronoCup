@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.AutoMoveComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
@@ -91,6 +92,7 @@ public class QuantumLeagueEntityFactory {
 		e.addComponent(new IsBulletComponent(shooter, playerData.side));
 
 		//No! Fire and forget e.addComponent(new IsRecordable("Bullet", e));
+		BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");
 
 		return e;
 	}

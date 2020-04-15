@@ -130,7 +130,7 @@ public class EntityFactory {
 		hasDecal.dontLockYAxis = false;
 		entity.addComponent(hasDecal);
 
-		HasDecalCycle cycle = new HasDecalCycle(.05f, 4*4);
+		HasDecalCycle cycle = new HasDecalCycle(.02f, 4*4);
 		cycle.remove_at_end_of_cycle = true;
 		int idx = 0;
 		for (int y=0 ; y<trs[0].length ; y++) {

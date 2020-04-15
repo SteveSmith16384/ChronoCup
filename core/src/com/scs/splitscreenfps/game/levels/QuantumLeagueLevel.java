@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
@@ -180,10 +181,18 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 	public void startRewindPhase() {
 		this.qlRecordAndPlaySystem.startRewind();
+		
+		BillBoardFPS_Main.audio.stopMusic();
+		
+		//BillBoardFPS_Main.audio.play("sfx/Replenish.wav");
+		BillBoardFPS_Main.audio.startMusic("sfx/Replenish.wav");
+
 	}
 
 
 	public void nextGamePhase() {
+		BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
+
 		this.qlRecordAndPlaySystem.loadNewRecordData();
 		this.qlPhaseSystem.startGamePhase();
 
@@ -242,6 +251,9 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	@Override
 	public void startGame() {
 		this.qlPhaseSystem.startGamePhase();
+		
+		BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
+
 	}
 
 

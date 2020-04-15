@@ -69,8 +69,6 @@ public class Game implements IModule {
 		main = _main;
 		inputs = _inputs;
 
-		// todo BillBoardFPS_Main.audio.startMusic("shared/Heroic Demise (New).mp3");
-
 		game_stage = 0;
 		batch2d = new SpriteBatch();
 		this.createECS();

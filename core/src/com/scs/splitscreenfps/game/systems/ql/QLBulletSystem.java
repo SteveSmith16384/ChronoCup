@@ -6,6 +6,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.ql.IsBulletComponent;
@@ -32,6 +33,7 @@ public class QLBulletSystem extends AbstractSystem {
 				entity.remove();
 				AbstractEntity expl = EntityFactory.createBlueExplosion(ecs, pos.position);
 				ecs.addEntity(expl);
+				BillBoardFPS_Main.audio.play("sfx/explosion_dull.wav");
 				continue;
 			}
 

@@ -39,7 +39,7 @@ public abstract class AbstractSystem implements ISystem {
 	 * Note to future self: Do NOT change this to handle multiple component types.  If that is
 	 * needed, create a separate system!
 	 */
-	public Class<?> getComponentClass() { // todo - make final when sure it works
+	public Class<?> getComponentClass() {
 		return component_class;
 	}
 

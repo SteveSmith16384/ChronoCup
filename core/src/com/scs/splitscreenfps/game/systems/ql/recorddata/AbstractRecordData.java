@@ -8,10 +8,12 @@ public abstract class AbstractRecordData {
 	
 	public int cmd;
 	public float time;
+	public int phase;
 	
-	public AbstractRecordData(int _cmd, float _time) {
+	public AbstractRecordData(int _cmd, int _phase, float _time) {
 		cmd = _cmd;
 		time = _time;
+		phase = _phase;
 	}
 
 }

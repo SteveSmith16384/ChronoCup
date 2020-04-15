@@ -38,12 +38,12 @@ public class QLBulletSystem extends AbstractSystem {
 			AbstractEntity[] ents = coll.getEntitiesByComponent(IsBulletComponent.class, QLPlayerData.class);
 			if (ents != null) {
 				IsBulletComponent bullet = (IsBulletComponent)entity.getComponent(IsBulletComponent.class);
-				// todo - check if shooter is alive
+				// Check if shooter is alive
 				QLPlayerData shooterData = (QLPlayerData)bullet.shooter.getComponent(QLPlayerData.class);
 				if (shooterData.health > 0) {
 					QLPlayerData playerData = (QLPlayerData)ents[1].getComponent(QLPlayerData.class);
 					if (playerData.side != bullet.side) {
-						ents[0].remove();
+						ents[0].remove(); // Remove bullet
 						playerData.health -= 50;
 
 						AbstractEntity expl = EntityFactory.createNormalExplosion(ecs, pos.position);

@@ -56,6 +56,11 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	}
 
 
+	public AbstractEntity getShadow(int player, int phase) {
+		return this.shadows[player][phase];
+	}
+	
+	
 	@Override
 	public void setupAvatars(AbstractEntity player, int playerIdx) {
 		player.addComponent(new QLPlayerData(playerIdx));
@@ -67,7 +72,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 			this.shadows[playerIdx][phase] = shadow;
 		}
 
-		player.addComponent(new IsRecordable("Player " + playerIdx + "_recordable", this.shadows[playerIdx][0]));
+		player.addComponent(new IsRecordable(playerIdx));//"Player " + playerIdx + "_recordable", this.shadows[playerIdx][0]));
 		player.addComponent(new QLCanShoot());
 		player.addComponent(new CanStandOnPoint());
 	}
@@ -152,7 +157,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 		game.ecs.processSystem(QLShootingSystem.class);
 		game.ecs.processSystem(StandOnPointSystem.class);
 		
-		qlRecordAndPlaySystem.process(); // Must be before phase system!ddddd
+		qlRecordAndPlaySystem.process(); // Must be before phase system!
 		this.qlPhaseSystem.process();
 	}
 
@@ -161,9 +166,10 @@ public class QuantumLeagueLevel extends AbstractLevel {
 		game.font_med.setColor(1, 1, 1, 1);
 		game.font_med.draw(batch2d, "In-Game?: " + this.qlPhaseSystem.isGamePhase(), 10, 30);
 		game.font_med.draw(batch2d, "Time: " + (int)(this.getCurrentPhaseTime()), 10, 60);
+		game.font_med.draw(batch2d, "Phase: " + (int)(this.qlPhaseSystem.getPhaseNum012()), 10, 90);
 
 		QLPlayerData playerData = (QLPlayerData)game.players[viewIndex].getComponent(QLPlayerData.class);
-		game.font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, 90);
+		game.font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, 120);
 	}
 
 
@@ -197,23 +203,25 @@ public class QuantumLeagueLevel extends AbstractLevel {
 			}
 
 			// Record against next shadow
-			IsRecordable isRecordable = (IsRecordable)game.players[playerIdx].getComponent(IsRecordable.class);
+			/*IsRecordable isRecordable = (IsRecordable)game.players[playerIdx].getComponent(IsRecordable.class);
 			if (this.qlPhaseSystem.getPhaseNum012() < 2) { // Only need to record if not last phase
 				isRecordable.entity = this.shadows[playerIdx][this.qlPhaseSystem.getPhaseNum012()-1];
 			} else {
 				isRecordable.entity = null; // No need to record any more.
-			}
+			}*/
 			
 			// Move players avatars back to start
 			GridPoint2Static start = this.startPositions.get(playerIdx);
 			PositionComponent posData = (PositionComponent)game.players[playerIdx].getComponent(PositionComponent.class);
-			posData.position.x = start.x;
-			posData.position.z = start.y;
+			posData.position.x = start.x + 0.5f;
+			posData.position.z = start.y + 0.5f;
 		}
 	}
 
 
 	public void allPhasesOver() {
+		this.game.ecs.removeSystem(QLPhaseSystem.class);
+		this.game.ecs.removeSystem(QLRecordAndPlaySystem.class);
 		// todo - calc winner and game over
 		game.playerHasWon(null);
 	}

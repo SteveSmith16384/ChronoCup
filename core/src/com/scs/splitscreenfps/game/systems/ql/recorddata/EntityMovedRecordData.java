@@ -5,16 +5,16 @@ import com.scs.basicecs.AbstractEntity;
 
 public class EntityMovedRecordData extends AbstractRecordData {
 
-	public AbstractEntity entity_for_rewind; // E.g. player themselves in phase 0
-	public AbstractEntity entity_for_playback;
+	public AbstractEntity entity;
+	public int playerIdx;
 	public Vector3 position = new Vector3();
 	public float direction;
 	
-	public EntityMovedRecordData(AbstractEntity _rewindEntity, AbstractEntity _playbackEntity, float _time, Vector3 pos, float dir) {
-		super(CMD_MOVED, _time);
+	public EntityMovedRecordData(int _playerIdx, AbstractEntity _entity, int phase, float _time, Vector3 pos, float dir) {
+		super(CMD_MOVED, phase, _time);
 
-		entity_for_rewind = _rewindEntity;
-		entity_for_playback =_playbackEntity;
+		playerIdx = _playerIdx;
+		entity = _entity;
 		
 		position.set(pos);
 		direction = dir;

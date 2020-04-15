@@ -60,7 +60,7 @@ public class QLShootingSystem extends AbstractSystem {
 			AbstractEntity bullet = QuantumLeagueEntityFactory.createBullet(ecs, player, startPos, tmpBulletOffset);
 			game.ecs.addEntity(bullet);
 			
-			level.qlRecordAndPlaySystem.addEvent(new BulletFiredRecordData(this.level.getCurrentPhaseTime(), player, startPos, tmpBulletOffset));
+			level.qlRecordAndPlaySystem.addEvent(new BulletFiredRecordData(this.level.qlPhaseSystem.getPhaseNum012(), this.level.getCurrentPhaseTime(), player, startPos, tmpBulletOffset));
 		}
 	}
 

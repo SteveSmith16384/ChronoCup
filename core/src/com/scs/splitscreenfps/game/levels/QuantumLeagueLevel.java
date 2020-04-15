@@ -12,6 +12,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.ql.CanStandOnPoint;
 import com.scs.splitscreenfps.game.components.ql.IsRecordable;
 import com.scs.splitscreenfps.game.components.ql.QLCanShoot;
 import com.scs.splitscreenfps.game.components.ql.QLPlayerData;
@@ -23,6 +24,7 @@ import com.scs.splitscreenfps.game.systems.ql.QLBulletSystem;
 import com.scs.splitscreenfps.game.systems.ql.QLPhaseSystem;
 import com.scs.splitscreenfps.game.systems.ql.QLRecordAndPlaySystem;
 import com.scs.splitscreenfps.game.systems.ql.QLShootingSystem;
+import com.scs.splitscreenfps.game.systems.ql.StandOnPointSystem;
 
 import ssmith.libgdx.GridPoint2Static;
 
@@ -67,6 +69,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 		player.addComponent(new IsRecordable("Player " + playerIdx + "_recordable", this.shadows[playerIdx][0]));
 		player.addComponent(new QLCanShoot());
+		player.addComponent(new CanStandOnPoint());
 	}
 
 
@@ -138,6 +141,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	public void addSystems(BasicECS ecs) {
 		ecs.addSystem(new QLBulletSystem(ecs));
 		ecs.addSystem(new QLShootingSystem(ecs, game, this));
+		ecs.addSystem(new StandOnPointSystem(ecs));
 
 	}
 
@@ -146,6 +150,8 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	public void update() {
 		game.ecs.processSystem(QLBulletSystem.class);
 		game.ecs.processSystem(QLShootingSystem.class);
+		game.ecs.processSystem(StandOnPointSystem.class);
+		
 		qlRecordAndPlaySystem.process(); // Must be before phase system!ddddd
 		this.qlPhaseSystem.process();
 	}

@@ -1,0 +1,3 @@
+RECORDING AND PLAYBACK
+* Only need to record the player as they move.  No need to record any shadows.
+* 

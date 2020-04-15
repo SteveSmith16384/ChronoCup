@@ -21,8 +21,6 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 	private QuantumLeagueLevel level;
 	private LinkedList<AbstractRecordData> dataBeingRecorded = new LinkedList<AbstractRecordData>();
 	private LinkedList<AbstractRecordData> dataBeingPlayedBack = new LinkedList<AbstractRecordData>();
-	private float currentPhaseTime;
-
 	private Iterator<AbstractRecordData> revIt;
 
 	public QLRecordAndPlaySystem(BasicECS _ecs, QuantumLeagueLevel _level) {
@@ -40,8 +38,6 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 
 	@Override
 	public void process() {
-		currentPhaseTime = level.getCurrentPhaseTime();
-
 		super.process();
 
 		if (level.isGamePhase()) {
@@ -49,7 +45,8 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 			if (this.level.qlPhaseSystem.getPhaseNum012() > 0) {
 				if (this.dataBeingPlayedBack.size() > 0) {
 					AbstractRecordData next = this.dataBeingPlayedBack.getFirst();
-					while (next.time < this.currentPhaseTime) {
+					float currentPhaseTime = level.getCurrentPhaseTime();
+					while (next.time < currentPhaseTime) {
 						next = this.dataBeingPlayedBack.removeFirst();
 						dataBeingRecorded.add(next); // Re-add ready for next time
 						processForwardEvent(next);
@@ -80,8 +77,7 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 	private void processForwardEvent(AbstractRecordData abstract_data) {
 		if (abstract_data.cmd == AbstractRecordData.CMD_MOVED) {
 			EntityMovedRecordData data = (EntityMovedRecordData)abstract_data;
-			//if (ecs.containsEntity(data.entityId)) {
-			AbstractEntity entity = data.entity;//ecs.get(data.entityId);
+			AbstractEntity entity = data.entity_for_playback;//ecs.get(data.entityId);
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 			AnimatedComponent anim = (AnimatedComponent)entity.getComponent(AnimatedComponent.class);
 			if (posData.position.equals(data.position)) {
@@ -93,18 +89,12 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 			}
 			posData.position.set(data.position);
 			posData.angle_degs = data.direction;
-			/*} else {
-				Settings.p("No entity!");
-			}*/
 		} else if (abstract_data.cmd == AbstractRecordData.CMD_BULLET_FIRED) {
 			BulletFiredRecordData data = (BulletFiredRecordData)abstract_data;
 			AbstractEntity bullet = QuantumLeagueEntityFactory.createBullet(ecs, data.shooter, data.start, data.offset);
 			ecs.addEntity(bullet);
 		} else if (abstract_data.cmd == AbstractRecordData.CMD_REMOVED) {
-			/*AbstractEntity entity = ecs.get(data.entityId);
-			IsRecordable isRecordable = (IsRecordable)entity.getComponent(IsRecordable.class);
-			isRecordable.active = false;
-			entity.remove();*/
+			// Needed?
 		} else {
 			throw new RuntimeException("Todo");
 		}
@@ -114,34 +104,32 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 	private void processReverseEvent(AbstractRecordData abstract_data) {
 		if (abstract_data.cmd == AbstractRecordData.CMD_MOVED) {
 			EntityMovedRecordData data = (EntityMovedRecordData)abstract_data;
-			//if (ecs.containsEntity(data.entityId)) {
-			AbstractEntity entity = data.entity;//ecs.get(data.entityId);
+			AbstractEntity entity = data.entity_for_rewind;
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 			AnimatedComponent anim = (AnimatedComponent)entity.getComponent(AnimatedComponent.class);
 			if (posData.position.equals(data.position)) {
 				anim.next_animation = anim.idle_anim_name;
-				//Settings.p("Shadow Idle");
 			} else {
 				anim.next_animation = anim.walk_anim_name;
-				//Settings.p("Shadow walking");
 			}
 			posData.position.set(data.position);
 			posData.angle_degs = data.direction;
-			/*} else {
-				//Settings.p("No entity!");
-			}*/
+			
+			Settings.p("Putting " + entity + " at pos " + data.position);
 		}
 	}
 
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
+		// Record entities position etc...
 		if (level.isGamePhase()) {
-			// Record entities position etc...
+			Settings.p("Recording " + entity);
 			if (level.qlPhaseSystem.getPhaseNum012() < 2) {
+				float currentPhaseTime = level.getCurrentPhaseTime();
 				IsRecordable isRecordable = (IsRecordable)entity.getComponent(IsRecordable.class);
 				PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
-				EntityMovedRecordData data = new EntityMovedRecordData(isRecordable.entity, currentPhaseTime, posData.position, posData.angle_degs);
+				EntityMovedRecordData data = new EntityMovedRecordData(entity, isRecordable.entity, currentPhaseTime, posData.position, posData.angle_degs);
 				this.dataBeingRecorded.add(data);
 			}
 		}

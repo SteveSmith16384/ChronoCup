@@ -7,9 +7,9 @@ public abstract class AbstractRecordData {
 	public static final int CMD_REMOVED = 3;
 	
 	public int cmd;
-	public long time;
+	public float time;
 	
-	public AbstractRecordData(int _cmd, long _time) {
+	public AbstractRecordData(int _cmd, float _time) {
 		cmd = _cmd;
 		time = _time;
 	}

@@ -76,8 +76,8 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	}
 
 
-	public long getPhaseTime() {
-		return System.currentTimeMillis() - this.qlPhaseSystem.this_phase_start_time;
+	public float getCurrentPhaseTime() {
+		return this.qlPhaseSystem.getCurrentPhaseTime();
 	}
 
 
@@ -153,8 +153,8 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 	public void renderUI(SpriteBatch batch2d, int viewIndex) {
 		game.font_med.setColor(1, 1, 1, 1);
-		game.font_med.draw(batch2d, "In-Game?: " + this.qlPhaseSystem.game_phase, 10, 30);
-		game.font_med.draw(batch2d, "Time: " + (int)(this.getPhaseTime() / 1000), 10, 60);
+		game.font_med.draw(batch2d, "In-Game?: " + this.qlPhaseSystem.isGamePhase(), 10, 30);
+		game.font_med.draw(batch2d, "Time: " + (int)(this.getCurrentPhaseTime()), 10, 60);
 
 		QLPlayerData playerData = (QLPlayerData)game.players[viewIndex].getComponent(QLPlayerData.class);
 		game.font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, 90);
@@ -162,45 +162,44 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 
 	public boolean isGamePhase() {
-		return this.qlPhaseSystem.game_phase;
+		return this.qlPhaseSystem.isGamePhase();
 	}
 
 
-	public void nextRewindPhase() {
+	public void startRewindPhase() {
+		this.qlRecordAndPlaySystem.startRewind();
 	}
 
 
 	public void nextGamePhase() {
 		this.qlRecordAndPlaySystem.loadNewRecordData();
+		this.qlPhaseSystem.startGamePhase();
+
 		for (int playerIdx=0 ; playerIdx<game.players.length ; playerIdx++) {
 			// Reset all health
 			QLPlayerData playerData = (QLPlayerData)game.players[playerIdx].getComponent(QLPlayerData.class);
 			playerData.health = 100;
 			for (int phase = 0 ; phase<2 ; phase++) {
-				//try {
 				playerData = (QLPlayerData)this.shadows[playerIdx][phase].getComponent(QLPlayerData.class);
 				playerData.health = 100;
-				/*} catch (ArrayIndexOutOfBoundsException ex) {
-					ex.printStackTrace();
-				}*/
 			}
 
-			GridPoint2Static start = this.startPositions.get(playerIdx);
 			// Add shadow avatars to ECS
-			if (this.qlPhaseSystem.phase_num_012 > 0) {
-				AbstractEntity shadow = this.shadows[playerIdx][this.qlPhaseSystem.phase_num_012-1];
+			if (this.qlPhaseSystem.getPhaseNum012() > 0) {
+				AbstractEntity shadow = this.shadows[playerIdx][this.qlPhaseSystem.getPhaseNum012()-1];
 				game.ecs.addEntity(shadow);
 			}
 
 			// Record against next shadow
 			IsRecordable isRecordable = (IsRecordable)game.players[playerIdx].getComponent(IsRecordable.class);
-			if (this.qlPhaseSystem.phase_num_012 <= 1) {
-				isRecordable.entity = this.shadows[playerIdx][this.qlPhaseSystem.phase_num_012];
+			if (this.qlPhaseSystem.getPhaseNum012() < 2) { // Only need to record if not last phase
+				isRecordable.entity = this.shadows[playerIdx][this.qlPhaseSystem.getPhaseNum012()-1];
 			} else {
 				isRecordable.entity = null; // No need to record any more.
 			}
-
+			
 			// Move players avatars back to start
+			GridPoint2Static start = this.startPositions.get(playerIdx);
 			PositionComponent posData = (PositionComponent)game.players[playerIdx].getComponent(PositionComponent.class);
 			posData.position.x = start.x;
 			posData.position.z = start.y;
@@ -223,6 +222,12 @@ public class QuantumLeagueLevel extends AbstractLevel {
 			game.font_med.draw(batch2d, s, x, y);
 			y -= this.game.font_med.getLineHeight();
 		}
+	}
+
+
+	@Override
+	public void startGame() {
+		this.qlPhaseSystem.startGamePhase();
 	}
 
 

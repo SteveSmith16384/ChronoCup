@@ -1,16 +1,17 @@
 package com.scs.splitscreenfps.game.systems.ql.recorddata;
 
 import com.badlogic.gdx.math.Vector3;
+import com.scs.basicecs.AbstractEntity;
 
 public class EntityMovedRecordData extends AbstractRecordData {
 
-	public int entityId; // todo - store actual entity!
+	public AbstractEntity entity; // todo - store actual entity!
 	public Vector3 position = new Vector3();
 	public float direction;
 	
-	public EntityMovedRecordData(int _entityId, long _time, Vector3 pos, float dir) {
+	public EntityMovedRecordData(AbstractEntity _entityId, float _time, Vector3 pos, float dir) {
 		super(CMD_MOVED, _time);
-		entityId = _entityId;
+		entity = _entityId;
 		position.set(pos);
 		direction = dir;
 	}

@@ -93,9 +93,11 @@ public class Game implements IModule {
 		for (int i=0 ; i<players.length ; i++) {
 			this.currentLevel.setupAvatars(this.players[i], i);
 		}
+		
+		currentLevel.startGame();
 	}
 
-
+	
 	private void loadAssetsForRescale() {
 		this.currentLevel.loadAssets();
 		DrawGuiSpritesSystem sys = (DrawGuiSpritesSystem)this.ecs.getSystem(DrawGuiSpritesSystem.class);

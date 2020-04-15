@@ -1,46 +1,71 @@
 package com.scs.splitscreenfps.game.systems.ql;
 
+import com.badlogic.gdx.Gdx;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.levels.QuantumLeagueLevel;
 
 public class QLPhaseSystem implements ISystem {
 
-	private static final long GAME_PHASE_DURATION = 15000;
-	private static final long REWIND_PHASE_DURATION = 1000;
+	private static final long GAME_PHASE_DURATION = 10;
 
-	public boolean game_phase = false; // otherwise, rewind phase
-	public long this_phase_start_time;
-	private long next_phase_time;
+	private boolean game_phase; // otherwise, rewind phase
+	//private long this_phase_start_time;
+	private float current_time;
 	private QuantumLeagueLevel qlLevel;
-	public int phase_num_012 = -1;
+	private int phase_num_012 = -1;
 
 	public QLPhaseSystem(QuantumLeagueLevel _level) {
 		qlLevel = _level;
-		next_phase_time = System.currentTimeMillis() + REWIND_PHASE_DURATION;
+	}
+
+
+	public int getPhaseNum012() {
+		return this.phase_num_012;
 	}
 
 
 	@Override
 	public void process() {
-		if (this.next_phase_time < System.currentTimeMillis()) {
-			this.game_phase = !this.game_phase;
-			this_phase_start_time = System.currentTimeMillis();
-			if (this.game_phase) {
+		if (this.game_phase) {
+			current_time += Gdx.graphics.getDeltaTime();
+			//showTimeLeft();
+			//long time = System.currentTimeMillis();
+			// this.next_phase_end_time - time
+			if (current_time > GAME_PHASE_DURATION) {
+				this.game_phase = false;
 				if (phase_num_012 <= 1) {
-					Settings.p("Game phase!");
-					phase_num_012++;
-					qlLevel.nextGamePhase();
-					next_phase_time = System.currentTimeMillis() + GAME_PHASE_DURATION;
+					Settings.p("Rewind phase!");
+					game_phase = false;
+					qlLevel.startRewindPhase();
 				} else {
 					qlLevel.allPhasesOver();
 				}
-			} else {
-				Settings.p("Rewind phase!");
-				qlLevel.nextRewindPhase();
-				next_phase_time = System.currentTimeMillis() + REWIND_PHASE_DURATION;
 			}
 		}
+	}
+
+
+	public void startGamePhase() {
+		Settings.p("Game phase!");
+		this.game_phase = true;
+		current_time = 0;
+		phase_num_012++;
+	}
+
+
+	private void showTimeLeft() {
+		Settings.p("Time left=" + (int)(GAME_PHASE_DURATION - current_time));
+	}
+
+	
+	public float getCurrentPhaseTime() {
+		return current_time;
+	}
+
+
+	public boolean isGamePhase() {
+		return this.game_phase;
 	}
 
 }

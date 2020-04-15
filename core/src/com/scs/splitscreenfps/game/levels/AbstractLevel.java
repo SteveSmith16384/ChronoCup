@@ -65,9 +65,11 @@ public abstract class AbstractLevel {
 
 	public abstract void load();
 	
+	public abstract void startGame();
+	
 	public void setupAvatars(AbstractEntity player, int playerIdx) {}
 	
-	public abstract void addSystems(BasicECS ecs);
+	public abstract void addSystems(BasicECS ecs); // todo - remove this
 
 	public abstract void update();
 	

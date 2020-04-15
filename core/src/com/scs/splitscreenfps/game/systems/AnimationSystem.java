@@ -20,7 +20,7 @@ public class AnimationSystem extends AbstractSystem {
 
 		if (anim.next_animation != null && anim.next_animation.length() > 0) {
 			if (anim.current_animation != anim.next_animation) {
-				Settings.p("Setting anim for " + entity + "to " + anim.next_animation);
+				//Settings.p("Setting anim for " + entity + "to " + anim.next_animation);
 				anim.current_animation = anim.next_animation;
 				anim.animationController.animate(anim.current_animation, -1, 2f, null, 0f); // todo - move anim speed to model data
 				anim.next_animation = null;

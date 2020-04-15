@@ -9,7 +9,7 @@ public class BulletFiredRecordData extends AbstractRecordData {
 	public Vector3 start;
 	public Vector3 offset;
 	
-	public BulletFiredRecordData(long time, AbstractEntity _shooter, Vector3 _start, Vector3 _offset) {
+	public BulletFiredRecordData(float time, AbstractEntity _shooter, Vector3 _start, Vector3 _offset) {
 		super(CMD_BULLET_FIRED, time);
 		
 		shooter = _shooter;

@@ -52,7 +52,7 @@ public class Game implements IModule {
 	public List<IInputMethod> inputs;
 	public MapData mapData;
 	public BasicECS ecs;
-	private AbstractLevel currentLevel;
+	public AbstractLevel currentLevel;
 
 	private int game_stage;
 	private long restartTime;

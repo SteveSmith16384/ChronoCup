@@ -16,7 +16,7 @@ import ssmith.libgdx.GridPoint2Static;
 
 public abstract class AbstractLevel {
 
-	protected Game game;
+	public Game game;
 	protected int map_width;
 	protected int map_height;
 	protected List<GridPoint2Static> startPositions = new ArrayList<GridPoint2Static>();

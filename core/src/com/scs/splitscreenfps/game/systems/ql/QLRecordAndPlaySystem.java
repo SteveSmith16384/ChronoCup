@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
@@ -110,11 +111,6 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 				//Settings.p("Shadow walking");
 			}
 			posData.position.set(data.position);
-
-			if (posData.position.x == 7) {
-				Settings.p("Wrong!");
-			}
-
 			posData.angle_degs = data.direction;
 		} else if (abstract_data.cmd == AbstractRecordData.CMD_BULLET_FIRED) {
 			BulletFiredRecordData data = (BulletFiredRecordData)abstract_data;
@@ -141,7 +137,15 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 			}
 			posData.position.set(data.position);
 			posData.angle_degs = data.direction;
-
+			
+			// Point camera in right directioon
+			IsRecordable isRecordable = (IsRecordable)entity.getComponent(IsRecordable.class);
+			Camera camera = level.game.viewports[isRecordable.playerIdx].camera;
+			//camera.direction =posData
+			float angle_rads = (float)Math.toRadians(data.direction);
+			camera.direction.x = (float)Math.cos(angle_rads);
+			camera.direction.z = -(float)Math.sin(angle_rads);
+			camera.update();
 			//Settings.p("Putting " + entity + " at pos " + data.position);
 		}
 	}
@@ -155,8 +159,11 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 			if (level.qlPhaseSystem.getPhaseNum012() < 2) {
 				float currentPhaseTime = level.getCurrentPhaseTime();
 				IsRecordable isRecordable = (IsRecordable)entity.getComponent(IsRecordable.class);
+				//Camera camera = level.game.viewports[isRecordable.playerIdx].camera;
+
 				PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 				EntityMovedRecordData data = new EntityMovedRecordData(isRecordable.playerIdx, entity, this.level.qlPhaseSystem.getPhaseNum012(), currentPhaseTime, posData.position, posData.angle_degs);
+				//data.cam_dir = camera.direction;
 				this.dataBeingRecordedThisPhase.add(data);
 
 				/*if (posData.position.x == 7) {

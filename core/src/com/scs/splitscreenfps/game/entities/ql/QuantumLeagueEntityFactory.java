@@ -32,12 +32,6 @@ public class QuantumLeagueEntityFactory {
 		if (side == 0) {
 			ModelInstance instance = ModelFunctions.loadModel("shared/models/quaternius/Smooth_Male_Shirt.g3db", false);
 
-			// Fade model
-			/*for (int i=0 ; i<instance.materials.size ; i++) {
-				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.BLACK));
-				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.BLACK));
-			}*/
-
 			float scale = ModelFunctions.getScaleForHeight(instance, .8f);
 			instance.transform.scl(scale);
 			Vector3 offset = ModelFunctions.getOrigin(instance);
@@ -53,17 +47,12 @@ public class QuantumLeagueEntityFactory {
 		} else if (side == 1) {
 			ModelInstance instance = ModelFunctions.loadModel("quantumleague/models/Alien.g3db", false);
 
-			// Fade model
-			/*for (int i=0 ; i<instance.materials.size ; i++) {
-				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.BLACK));
-				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.BLACK));
-			}*/
-
 			float scale = ModelFunctions.getScaleForHeight(instance, .8f);
 			instance.transform.scl(scale);		
 			Vector3 offset = ModelFunctions.getOrigin(instance);
 			offset.y -= .3f; // Hack since model is too high
-			HasModelComponent hasModel = new HasModelComponent("Alien", instance, offset, 0, scale);
+			
+			HasModelComponent hasModel = new HasModelComponent("Alien", instance, offset, 90, scale);
 			e.addComponent(hasModel);
 
 			AnimationController animation = new AnimationController(instance);

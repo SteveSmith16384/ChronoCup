@@ -90,7 +90,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			Vector3 offset = ModelFunctions.getOrigin(instance);
 			offset.y -= .3f; // Hack since model is too high
 
-			HasModelComponent hasModel = new HasModelComponent("Alien", instance, offset, 0, scale);
+			HasModelComponent hasModel = new HasModelComponent("Alien", instance, offset, 90, scale);
 			hasModel.dontDrawInViewId = playerIdx;
 			this.addComponent(hasModel);
 

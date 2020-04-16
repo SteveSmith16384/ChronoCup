@@ -41,18 +41,22 @@ public class QLShootingSystem extends AbstractSystem {
 		QLCanShoot cc = (QLCanShoot)entity.getComponent(QLCanShoot.class);
 		long interval = 300;
 		if (cc.ammo == 0) {
-			interval = 1000;
-			cc.ammo = 6;
-			BillBoardFPS_Main.audio.play("sfx/gun_reload_lock_or_click_sound.wav");			
-			Settings.p("Reloading");
+			interval = 1500;
+			//cc.ammo = 6;
 		}
 		if (cc.lastShotTime + interval > System.currentTimeMillis()) {
+			//Settings.p("Too soon");
 			return;
 		}
 
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
 
 		if (isShootPressed(player.inputMethod)) {
+			if (cc.ammo == 0) {
+				BillBoardFPS_Main.audio.play("sfx/gun_reload_lock_or_click_sound.wav");			
+				Settings.p("Reloading");
+				cc.ammo = 6;
+			}
 			//Settings.p("Shot!");
 			
 			cc.lastShotTime = System.currentTimeMillis();

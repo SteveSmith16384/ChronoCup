@@ -61,6 +61,9 @@ public class QLBulletSystem extends AbstractSystem {
 								instance.materials.get(i).set(ColorAttribute.createAmbient(Color.WHITE));
 							}*/
 							QuantumLeagueLevel.setAvatarColour(ents[1], false);
+							
+							BillBoardFPS_Main.audio.startMusic("sfx/qubodup-PowerDrain.ogg");
+							
 						}
 
 						AbstractEntity expl = EntityFactory.createNormalExplosion(ecs, pos.position);

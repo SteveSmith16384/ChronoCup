@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
@@ -144,7 +145,11 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 			//camera.direction =posData
 			float angle_rads = (float)Math.toRadians(data.direction);
 			camera.direction.x = (float)Math.cos(angle_rads);
+			camera.direction.y = 0;
 			camera.direction.z = -(float)Math.sin(angle_rads);
+			camera.direction.nor();
+			camera.up.set(Vector3.Y);
+			//camera.rotate(Vector3.Y, -rotSpeedX * input.getLookRight() * dt);
 			camera.update();
 			//Settings.p("Putting " + entity + " at pos " + data.position);
 		}

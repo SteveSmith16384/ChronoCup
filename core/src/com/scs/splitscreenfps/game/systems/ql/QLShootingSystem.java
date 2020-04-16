@@ -64,10 +64,11 @@ public class QLShootingSystem extends AbstractSystem {
 			startPos.set(posData.position);
 			startPos.y -= .3f;
 			
+			// Todo - make angles +90 and scl positive!
 			Vector3 tmpBulletOffset = new Vector3();
 			tmpBulletOffset.set((float)Math.sin(Math.toRadians(posData.angle_degs-90)), 0, (float)Math.cos(Math.toRadians(posData.angle_degs-90)));
 			tmpBulletOffset.nor();
-			tmpBulletOffset.scl(-4);
+			tmpBulletOffset.scl(-8);
 			AbstractEntity bullet = QuantumLeagueEntityFactory.createBullet(ecs, player, startPos, tmpBulletOffset);
 			game.ecs.addEntity(bullet);
 			

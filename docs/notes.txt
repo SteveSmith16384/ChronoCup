@@ -1,4 +1,4 @@
 RECORDING AND PLAYBACK
 * Only need to record the player as they move.  No need to record any shadows.
 * For rewind, use current phase recording data
-* For playback, use whole list
+* For playback, we use 2 lists for efficiency

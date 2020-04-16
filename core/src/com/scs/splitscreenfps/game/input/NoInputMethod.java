@@ -77,12 +77,6 @@ public class NoInputMethod implements IInputMethod {
 
 
 	@Override
-	public boolean isHelpPressed() {
-		return false;
-	}
-
-	
-	@Override
 	public boolean isKeyJustPressed(int key) {
 		return false;
 	}

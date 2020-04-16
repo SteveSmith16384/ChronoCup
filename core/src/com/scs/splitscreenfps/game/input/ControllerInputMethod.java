@@ -80,10 +80,6 @@ public class ControllerInputMethod implements IInputMethod {
 		return this.controller.getButton(10); // todo - check	
 	}
 
-	@Override
-	public boolean isHelpPressed() {
-		return false; // todo
-	}
 
 	@Override
 	public boolean isKeyJustPressed(int key) {

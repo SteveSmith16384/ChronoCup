@@ -82,10 +82,6 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 		return false; //Gdx.input.isKeyPressed(Keys.CONTROL_LEFT);
 	}
 
-	@Override
-	public boolean isHelpPressed() {
-		return Gdx.input.isKeyPressed(Keys.H);
-	}
 
 	@Override
 	public boolean isKeyJustPressed(int key) {

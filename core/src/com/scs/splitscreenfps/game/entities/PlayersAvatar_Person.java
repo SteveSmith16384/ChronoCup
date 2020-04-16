@@ -18,6 +18,8 @@ import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
+import ssmith.libgdx.ModelFunctions;
+
 public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 	private static final float MOVE_SPEED = 1.5f;
@@ -50,45 +52,43 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 	private ModelInstance addModel(int playerIdx, int modelType) {
 		AssetManager am = game.assetManager;
 
-		Model model = null;
-
 		switch (modelType) {
 		case 0:
+		{
 			am.load("shared/models/quaternius/Smooth_Male_Shirt.g3db", Model.class);
 			am.finishLoading();
-			model = am.get("shared/models/quaternius/Smooth_Male_Shirt.g3db");
-			break;
-		case 1:
-			am.load("shared/models/quaternius/Male_Casual.g3db", Model.class);
-			am.finishLoading();
-			model = am.get("shared/models/quaternius/Male_Casual.g3db");
-			/*am.load("space-kit-1.0/Models/station.g3db", Model.class);
-			am.finishLoading();
-			model = am.get("space-kit-1.0/Models/station.g3db");*/
-			break;
-		case 2:
-			am.load("shared/models/quaternius/Male_LongSleeve.g3db", Model.class);
-			am.finishLoading();
-			model = am.get("shared/models/quaternius/Male_LongSleeve.g3db");
-			break;
-		case 3:
-			am.load("shared/models/quaternius/Male_Shirt.g3db", Model.class);
-			am.finishLoading();
-			model = am.get("shared/models/quaternius/Male_Shirt.g3db");
-			break;
+			Model model = am.get("shared/models/quaternius/Smooth_Male_Shirt.g3db");
+			ModelInstance instance = new ModelInstance(model);
+			HasModelComponent hasModel = new HasModelComponent("SmoothMale", instance, -.3f, 90, 0.0016f);
+			hasModel.dontDrawInViewId = playerIdx;
+			this.addComponent(hasModel);
+
+			AnimationController animation = new AnimationController(instance);
+			AnimatedComponent anim = new AnimatedComponent(animation, "HumanArmature|Man_Walk", "HumanArmature|Man_Idle");
+			anim.animationController = animation;
+			this.addComponent(anim);
+
+			return instance;
 		}
-		ModelInstance instance = new ModelInstance(model);
+		case 1:
+		{
+			ModelInstance instance = ModelFunctions.loadModel("quantumleague/models/Alien.g3db", false);
+			float scale = ModelFunctions.getScaleForHeight(instance, .8f);
+			instance.transform.scl(scale);		
+			Vector3 offset = ModelFunctions.getOrigin(instance);
+			offset.y -= .3f; // Hack since model is too high
+			HasModelComponent hasModel = new HasModelComponent("Alien", instance, offset, 0, scale);
+			this.addComponent(hasModel);
 
-		HasModelComponent hasModel = new HasModelComponent("SmoothMale", instance, -.3f, 90, 0.0016f);
-		hasModel.dontDrawInViewId = playerIdx;
-		this.addComponent(hasModel);
-		
-		AnimationController animation = new AnimationController(instance);
-		AnimatedComponent anim = new AnimatedComponent(animation, "HumanArmature|Man_Walk", "HumanArmature|Man_Idle");
-		anim.animationController = animation;
-		this.addComponent(anim);
+			AnimationController animation = new AnimationController(instance);
+			AnimatedComponent anim = new AnimatedComponent(animation, "AlienArmature|Alien_Walk", "AlienArmature|Alien_Idle");
+			anim.animationController = animation;
+			this.addComponent(anim);
 
-		return instance;
+			return instance;
+		}
+		}
+		throw new RuntimeException("Unknown modelType:" + modelType);
 	}
 
 
@@ -135,6 +135,6 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		camera.position.set(posData.position.x, posData.position.y + (Settings.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
 
 	}
-	
+
 }
 

@@ -6,6 +6,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.ql.QLCanShoot;
@@ -38,7 +39,14 @@ public class QLShootingSystem extends AbstractSystem {
 		}
 		
 		QLCanShoot cc = (QLCanShoot)entity.getComponent(QLCanShoot.class);
-		if (cc.lastShotTime + 1000 > System.currentTimeMillis()) {
+		long interval = 300;
+		if (cc.ammo == 0) {
+			interval = 1000;
+			cc.ammo = 6;
+			BillBoardFPS_Main.audio.play("sfx/gun_reload_lock_or_click_sound.wav");			
+			Settings.p("Reloading");
+		}
+		if (cc.lastShotTime + interval > System.currentTimeMillis()) {
 			return;
 		}
 
@@ -48,11 +56,13 @@ public class QLShootingSystem extends AbstractSystem {
 			//Settings.p("Shot!");
 			
 			cc.lastShotTime = System.currentTimeMillis();
+			cc.ammo--;
 
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 			
 			Vector3 startPos = new Vector3();
 			startPos.set(posData.position);
+			startPos.y -= .3f;
 			
 			Vector3 tmpBulletOffset = new Vector3();
 			tmpBulletOffset.set((float)Math.sin(Math.toRadians(posData.angle_degs-90)), 0, (float)Math.cos(Math.toRadians(posData.angle_degs-90)));

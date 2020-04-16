@@ -150,6 +150,10 @@ public class Game implements IModule {
 	@Override
 	public void render() {
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			if (Settings.AUTO_START) {
+				System.exit(0);
+				return;
+			}
 			this.main.next_module = new PreGameScreen(main);
 		}
 
@@ -202,14 +206,6 @@ public class Game implements IModule {
 
 			currentLevel.renderUI(batch2d, currentViewId);
 
-			if (players[this.currentViewId].inputMethod.isHelpPressed()) {
-				this.currentLevel.renderHelp(batch2d, currentViewId);
-			}
-
-			/*if (players[currentViewId] != null) {
-				players[currentViewId].renderUI(batch2d, font);
-			}*/
-
 			/*if (Settings.TEST_SCREEN_COORDS) {
 				font.draw(batch2d, "TL", 20, 20);
 				font.draw(batch2d, "50", 50, 50);
@@ -232,7 +228,6 @@ public class Game implements IModule {
 				}
 			}
 			batch2d.end();
-
 		}
 	}
 

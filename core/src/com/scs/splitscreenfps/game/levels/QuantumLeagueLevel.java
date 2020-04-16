@@ -13,7 +13,6 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.ql.CanStandOnPoint;
 import com.scs.splitscreenfps.game.components.ql.IsRecordable;
 import com.scs.splitscreenfps.game.components.ql.QLCanShoot;
 import com.scs.splitscreenfps.game.components.ql.QLPlayerData;
@@ -75,7 +74,6 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 		player.addComponent(new IsRecordable(playerIdx));//"Player " + playerIdx + "_recordable", this.shadows[playerIdx][0]));
 		player.addComponent(new QLCanShoot());
-		player.addComponent(new CanStandOnPoint());
 	}
 
 
@@ -184,7 +182,6 @@ public class QuantumLeagueLevel extends AbstractLevel {
 		
 		BillBoardFPS_Main.audio.stopMusic();
 		
-		//BillBoardFPS_Main.audio.play("sfx/Replenish.wav");
 		BillBoardFPS_Main.audio.startMusic("sfx/Replenish.wav");
 
 	}
@@ -233,18 +230,6 @@ public class QuantumLeagueLevel extends AbstractLevel {
 		this.game.ecs.removeSystem(QLRecordAndPlaySystem.class);
 		// todo - calc winner and game over
 		game.playerHasWon(null);
-	}
-
-
-	@Override
-	public void renderHelp(SpriteBatch batch2d, int viewIndex) {
-		game.font_med.setColor(1, 1, 1, 1);
-		int x = (int)(Gdx.graphics.getWidth() * 0.4);
-		int y = (int)(Gdx.graphics.getHeight() * 0.8);
-		for (String s : this.instructions) {
-			game.font_med.draw(batch2d, s, x, y);
-			y -= this.game.font_med.getLineHeight();
-		}
 	}
 
 

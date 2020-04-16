@@ -30,21 +30,10 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 	public void create() {
 		Settings.init();
 
-		if (Settings.AUTO_START) {
-			List<IInputMethod> inputs = new ArrayList<IInputMethod>();
-			inputs.add(new MouseAndKeyboardInputMethod());
-			if (Settings.START_4_PLAYERS) {
-				inputs.add(new NoInputMethod());
-				inputs.add(new NoInputMethod());
-				inputs.add(new NoInputMethod());
-			}
-			current_module = new Game(this, inputs);
-		} else {
-			if (Settings.RELEASE_MODE) {
-				this.setFullScreen();
-			}
-			current_module = new PreGameScreen(this);
+		if (Settings.RELEASE_MODE) {
+			this.setFullScreen();
 		}
+		current_module = new PreGameScreen(this);
 	}
 
 
@@ -108,8 +97,8 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 
 
 	}
-	
-	
+
+
 	private void setFullScreen() {
 		DisplayMode m = null;
 		for(DisplayMode mode: Gdx.graphics.getDisplayModes()) {

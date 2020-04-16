@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game.input;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 
 public class MouseAndKeyboardInputMethod implements IInputMethod {
@@ -64,7 +65,7 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isCrossPressed() {
-		return false; //Gdx.input.isKeyPressed(Keys.ENTER);
+		return Gdx.input.isButtonPressed(Input.Buttons.LEFT);
 	}
 
 	@Override

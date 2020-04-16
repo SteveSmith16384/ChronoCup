@@ -39,7 +39,9 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	private List<String> instructions = new ArrayList<String>(); 
 	public QLPhaseSystem qlPhaseSystem;
 	public QLRecordAndPlaySystem qlRecordAndPlaySystem;
-	private AbstractEntity[][] shadows; // Player, phase
+	private final AbstractEntity[][] shadows; // Player, phase
+	public GridPoint2Static spot; // todo - rename
+	public float[] timeOnPoint = new float[game.players.length];
 
 	public QuantumLeagueLevel(Game _game) {
 		super(_game);
@@ -134,6 +136,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 						} else if (token.equals("G")) { // Goal point
 							Floor floor = new Floor(game.ecs, "quantumleague/textures/deploy_sq.png", col, row, 1, 1, false);
 							game.ecs.addEntity(floor);
+							 spot = new GridPoint2Static(col, row);
 						} else {
 							throw new RuntimeException("Unknown cell type: " + token);
 						}
@@ -149,7 +152,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	public void addSystems(BasicECS ecs) {
 		ecs.addSystem(new QLBulletSystem(ecs));
 		ecs.addSystem(new QLShootingSystem(ecs, game, this));
-		ecs.addSystem(new StandOnPointSystem(ecs));
+		ecs.addSystem(new StandOnPointSystem(ecs, this));
 
 	}
 

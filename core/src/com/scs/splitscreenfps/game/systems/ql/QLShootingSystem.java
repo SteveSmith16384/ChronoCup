@@ -77,15 +77,15 @@ public class QLShootingSystem extends AbstractSystem {
 
 
 	private boolean isShootPressed(IInputMethod input) {
-		if (input instanceof MouseAndKeyboardInputMethod) { 
-			return input.isKeyPressed(Keys.SPACE);
-		} else if (input instanceof ControllerInputMethod) {
+		//if (input instanceof MouseAndKeyboardInputMethod) { 
+			return input.isCrossPressed();
+		/*} else if (input instanceof ControllerInputMethod) {
 			return input.isCrossPressed();
 		} else if (input instanceof NoInputMethod) {
 			return false;
 		} else {
 			throw new RuntimeException("Unknown input type");
-		}
+		}*/
 
 	}
 

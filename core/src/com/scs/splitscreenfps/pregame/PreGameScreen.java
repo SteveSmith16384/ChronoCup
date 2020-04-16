@@ -193,7 +193,9 @@ public class PreGameScreen implements IModule {
 			inputs.add(new MouseAndKeyboardInputMethod());
 		}
 		for (Controller c : controllerManager.getInGameControllers()) {
-			inputs.add(new ControllerInputMethod(c));
+			if (inputs.size() <= 2) { // Max 2 players for now
+				inputs.add(new ControllerInputMethod(c));
+			}
 		}
 		if (inputs.size() > 0) {
 			main.next_module = new Game(main, inputs);

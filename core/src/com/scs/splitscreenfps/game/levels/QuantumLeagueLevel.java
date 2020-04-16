@@ -6,12 +6,16 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.ql.IsRecordable;
 import com.scs.splitscreenfps.game.components.ql.QLCanShoot;
@@ -59,8 +63,8 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	public AbstractEntity getShadow(int player, int phase) {
 		return this.shadows[player][phase];
 	}
-	
-	
+
+
 	@Override
 	public void setupAvatars(AbstractEntity player, int playerIdx) {
 		player.addComponent(new QLPlayerData(playerIdx));
@@ -155,7 +159,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 		game.ecs.processSystem(QLBulletSystem.class);
 		game.ecs.processSystem(QLShootingSystem.class);
 		game.ecs.processSystem(StandOnPointSystem.class);
-		
+
 		qlRecordAndPlaySystem.process(); // Must be before phase system!
 		this.qlPhaseSystem.process();
 	}
@@ -179,13 +183,28 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 	public void startRewindPhase() {
 		this.qlRecordAndPlaySystem.startRewind();
-		
+
 		BillBoardFPS_Main.audio.stopMusic();
-		
+
 		BillBoardFPS_Main.audio.startMusic("sfx/Replenish.wav");
 
 	}
 
+
+	public static void setAvatarColour(AbstractEntity e, boolean alive) {
+		// Reset player colours
+		HasModelComponent hasModel = (HasModelComponent)e.getComponent(HasModelComponent.class);
+		ModelInstance instance = hasModel.model;
+		for (int i=0 ; i<instance.materials.size ; i++) {
+			if (alive) {
+				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.BLACK));
+				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.BLACK));
+			} else {
+				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.WHITE));
+				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.WHITE));
+			}
+		}
+	}
 
 	public void nextGamePhase() {
 		BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
@@ -197,10 +216,14 @@ public class QuantumLeagueLevel extends AbstractLevel {
 			// Reset all health
 			QLPlayerData playerData = (QLPlayerData)game.players[playerIdx].getComponent(QLPlayerData.class);
 			playerData.health = 100;
+			setAvatarColour(game.players[playerIdx], true);
+
 			for (int phase = 0 ; phase<2 ; phase++) {
 				playerData = (QLPlayerData)this.shadows[playerIdx][phase].getComponent(QLPlayerData.class);
 				playerData.health = 100;
+				setAvatarColour(this.shadows[playerIdx][phase], true);
 			}
+
 
 			// Add shadow avatars to ECS
 			if (this.qlPhaseSystem.getPhaseNum012() > 0) {
@@ -215,7 +238,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 			} else {
 				isRecordable.entity = null; // No need to record any more.
 			}*/
-			
+
 			// Move players avatars back to start
 			GridPoint2Static start = this.startPositions.get(playerIdx);
 			PositionComponent posData = (PositionComponent)game.players[playerIdx].getComponent(PositionComponent.class);
@@ -236,7 +259,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	@Override
 	public void startGame() {
 		this.qlPhaseSystem.startGamePhase();
-		
+
 		BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
 
 	}

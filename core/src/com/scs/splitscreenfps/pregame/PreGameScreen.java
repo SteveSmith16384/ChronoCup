@@ -96,6 +96,8 @@ public class PreGameScreen implements IModule {
 			System.exit(0);
 		}
 
+		controllerManager.checkForControllers();
+
 		if (Settings.AUTO_START) {
 			List<IInputMethod> inputs = new ArrayList<IInputMethod>();
 			inputs.add(new MouseAndKeyboardInputMethod());

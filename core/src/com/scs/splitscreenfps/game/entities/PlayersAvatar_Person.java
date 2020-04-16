@@ -1,8 +1,10 @@
 package com.scs.splitscreenfps.game.entities;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -17,6 +19,7 @@ import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
+import com.scs.splitscreenfps.game.levels.QuantumLeagueLevel;
 
 import ssmith.libgdx.ModelFunctions;
 
@@ -46,6 +49,8 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		camera = _viewportData.camera;
 
 		cameraController = new PersonCameraController(camera, inputMethod);
+		
+		QuantumLeagueLevel.setAvatarColour(this, true);
 	}
 
 
@@ -59,6 +64,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			am.finishLoading();
 			Model model = am.get("shared/models/quaternius/Smooth_Male_Shirt.g3db");
 			ModelInstance instance = new ModelInstance(model);
+			
 			HasModelComponent hasModel = new HasModelComponent("SmoothMale", instance, -.3f, 90, 0.0016f);
 			hasModel.dontDrawInViewId = playerIdx;
 			this.addComponent(hasModel);
@@ -68,6 +74,12 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			anim.animationController = animation;
 			this.addComponent(anim);
 
+			/*
+			for (int i=0 ; i<instance.materials.size ; i++) {
+				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.BLACK));
+				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.BLACK));
+			}
+			*/
 			return instance;
 		}
 		case 1:
@@ -77,14 +89,24 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			instance.transform.scl(scale);		
 			Vector3 offset = ModelFunctions.getOrigin(instance);
 			offset.y -= .3f; // Hack since model is too high
+
 			HasModelComponent hasModel = new HasModelComponent("Alien", instance, offset, 0, scale);
+			hasModel.dontDrawInViewId = playerIdx;
 			this.addComponent(hasModel);
 
 			AnimationController animation = new AnimationController(instance);
 			AnimatedComponent anim = new AnimatedComponent(animation, "AlienArmature|Alien_Walk", "AlienArmature|Alien_Idle");
 			anim.animationController = animation;
 			this.addComponent(anim);
+			
+			/*
+			QuantumLeagueLevel.setAvatarColour(e, alive);
 
+			for (int i=0 ; i<instance.materials.size ; i++) {
+				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.BLACK));
+				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.BLACK));
+			}
+			*/
 			return instance;
 		}
 		}

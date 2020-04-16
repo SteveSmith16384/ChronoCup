@@ -2,16 +2,21 @@ package com.scs.splitscreenfps.game.systems.ql;
 
 import java.util.List;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.EventCollision;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.ql.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.ql.QLPlayerData;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
+import com.scs.splitscreenfps.game.levels.QuantumLeagueLevel;
 
 public class QLBulletSystem extends AbstractSystem {
 
@@ -47,6 +52,16 @@ public class QLBulletSystem extends AbstractSystem {
 					if (playerData.side != bullet.side) {
 						ents[0].remove(); // Remove bullet
 						playerData.health -= 50;
+
+						if (playerData.health <= 0) {
+							/*HasModelComponent hasModel = (HasModelComponent)ents[1].getComponent(HasModelComponent.class);
+							ModelInstance instance = hasModel.model;
+							for (int i=0 ; i<instance.materials.size ; i++) {
+								instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.WHITE));
+								instance.materials.get(i).set(ColorAttribute.createAmbient(Color.WHITE));
+							}*/
+							QuantumLeagueLevel.setAvatarColour(ents[1], false);
+						}
 
 						AbstractEntity expl = EntityFactory.createNormalExplosion(ecs, pos.position);
 						ecs.addEntity(expl);

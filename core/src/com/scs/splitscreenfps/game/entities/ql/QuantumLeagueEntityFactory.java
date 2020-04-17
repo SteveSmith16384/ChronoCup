@@ -79,9 +79,17 @@ public class QuantumLeagueEntityFactory {
 
 		HasDecal hasDecal = new HasDecal();
 		if (playerData.side == 0) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("quantumleague/laser_bolt_red.png", 0.1f);
+			if (playerData.health > 0) {
+				hasDecal.decal = GraphicsHelper.DecalHelper("quantumleague/laser_bolt_red.png", 0.1f);
+			} else {
+				hasDecal.decal = GraphicsHelper.DecalHelper("quantumleague/laser_bolt_red_desync.png", 0.1f);
+			}
 		} else if (playerData.side == 1) {
+			if (playerData.health > 0) {
 			hasDecal.decal = GraphicsHelper.DecalHelper("quantumleague/laser_bolt_blue.png", 0.1f);
+			} else {
+				hasDecal.decal = GraphicsHelper.DecalHelper("quantumleague/laser_bolt_blue_desync.png", 0.1f);
+			}
 		} else {
 			throw new RuntimeException("Todo");
 		}

@@ -139,6 +139,10 @@ public class QuantumLeagueLevel extends AbstractLevel {
 							Floor floor = new Floor(game.ecs, "quantumleague/textures/deploy_sq.png", col, row, 1, 1, false);
 							game.ecs.addEntity(floor);
 							 spot = new GridPoint2Static(col, row);
+						} else if (token.equals("B")) { // Border
+							game.mapData.map[col][row].blocked = true;
+							Wall wall = new Wall(game.ecs, "quantumleague/textures/mjst_metal_beamwindow_diffuse.png", col, 0, row, false);
+							game.ecs.addEntity(wall);
 						} else {
 							throw new RuntimeException("Unknown cell type: " + token);
 						}

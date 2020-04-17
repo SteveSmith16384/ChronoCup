@@ -8,14 +8,18 @@ import java.util.regex.Pattern;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.math.Rectangle;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
+import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.ql.IsRecordable;
@@ -44,7 +48,8 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	private final AbstractEntity[][] shadows; // Player, phase
 	public GridPoint2Static spot; // todo - rename
 	public float[] timeOnPoint = new float[game.players.length];
-
+	//private Sprite crosshairs;
+	
 	public QuantumLeagueLevel(Game _game) {
 		super(_game);
 
@@ -61,6 +66,11 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 		this.qlPhaseSystem = new QLPhaseSystem(this);
 		this.qlRecordAndPlaySystem = new QLRecordAndPlaySystem(game.ecs, this);
+		/*
+		Texture weaponTex = new Texture(Gdx.files.internal("quantumleague/crosshairs.png"));		
+		crosshairs = new Sprite(weaponTex);
+		crosshairs.setScale(.01f);
+		*/
 	}
 
 
@@ -72,6 +82,12 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	@Override
 	public void setupAvatars(AbstractEntity player, int playerIdx) {
 		player.addComponent(new QLPlayerData(playerIdx));
+
+		Texture weaponTex = new Texture(Gdx.files.internal("quantumleague/crosshairs.png"));		
+		Sprite sprite = new Sprite(weaponTex);
+		sprite.setPosition((Gdx.graphics.getWidth()-sprite.getWidth())/2, 0);		
+		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_CARRIED, new Rectangle(0.45f, 0.45f, 0.1f, 0.1f));
+		game.players[playerIdx].addComponent(hgsc);
 
 		// Create shadows ready for phase
 		GridPoint2Static start = this.startPositions.get(playerIdx);
@@ -156,7 +172,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 	@Override
 	public void addSystems(BasicECS ecs) {
-		ecs.addSystem(new QLBulletSystem(ecs));
+		ecs.addSystem(new QLBulletSystem(ecs, game));
 		ecs.addSystem(new QLShootingSystem(ecs, game, this));
 		ecs.addSystem(new StandOnPointSystem(ecs, this));
 
@@ -172,6 +188,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 		qlRecordAndPlaySystem.process(); // Must be before phase system!
 		this.qlPhaseSystem.process();
 	}
+	
 
 	public void renderUI(SpriteBatch batch2d, int viewIndex) {
 		float yOff = game.font_med.getLineHeight() * 1.2f;
@@ -184,6 +201,13 @@ public class QuantumLeagueLevel extends AbstractLevel {
 		QLPlayerData playerData = (QLPlayerData)game.players[viewIndex].getComponent(QLPlayerData.class);
 		game.font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, (yOff*5));
 		game.font_med.draw(batch2d, "Score: " + (int)(this.timeOnPoint[playerData.side]), 10, (yOff*6));
+		/*
+		int x = (int)game.viewports[viewIndex].viewPos.getCenterX();
+		int y = (int)game.viewports[viewIndex].viewPos.getCenterY();
+		//crosshairs.setPosition(x, y);
+		//batch2d.draw(crosshairs, x, y);
+		crosshairs.draw(batch2d);
+		*/
 	}
 
 
@@ -225,6 +249,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 			}
 		}
 	}
+	
 
 	public void nextGamePhase() {
 		BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
@@ -250,14 +275,6 @@ public class QuantumLeagueLevel extends AbstractLevel {
 				AbstractEntity shadow = this.shadows[playerIdx][this.qlPhaseSystem.getPhaseNum012()-1];
 				game.ecs.addEntity(shadow);
 			}
-
-			// Record against next shadow
-			/*IsRecordable isRecordable = (IsRecordable)game.players[playerIdx].getComponent(IsRecordable.class);
-			if (this.qlPhaseSystem.getPhaseNum012() < 2) { // Only need to record if not last phase
-				isRecordable.entity = this.shadows[playerIdx][this.qlPhaseSystem.getPhaseNum012()-1];
-			} else {
-				isRecordable.entity = null; // No need to record any more.
-			}*/
 
 			// Move players avatars back to start
 			GridPoint2Static start = this.startPositions.get(playerIdx);

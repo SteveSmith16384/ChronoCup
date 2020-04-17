@@ -2,16 +2,13 @@ package com.scs.splitscreenfps.game.systems.ql;
 
 import java.util.List;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.EventCollision;
-import com.scs.splitscreenfps.game.components.HasModelComponent;
+import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.ql.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.ql.QLPlayerData;
@@ -20,8 +17,12 @@ import com.scs.splitscreenfps.game.levels.QuantumLeagueLevel;
 
 public class QLBulletSystem extends AbstractSystem {
 
-	public QLBulletSystem(BasicECS ecs) {
+	private Game game;
+
+	public QLBulletSystem(BasicECS ecs, Game _game) {
 		super(ecs, IsBulletComponent.class);
+
+		game = _game;
 	}
 
 
@@ -54,6 +55,14 @@ public class QLBulletSystem extends AbstractSystem {
 						if (playerHitData.side != bullet.side) {
 							ents[0].remove(); // Remove bullet
 							playerHitData.health -= 50;
+
+							for (int id = 0 ; id<game.players.length ; id++) {
+								if (ents[1] == game.players[id]) {
+									AbstractEntity redfilter = EntityFactory.createRedFilter(game.ecs, id);
+									ecs.addEntity(redfilter);
+									break;
+								}
+							}
 
 							if (playerHitData.health <= 0) {
 								QuantumLeagueLevel.setAvatarColour(ents[1], false);

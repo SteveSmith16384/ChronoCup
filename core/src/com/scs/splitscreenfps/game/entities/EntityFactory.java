@@ -16,7 +16,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
@@ -78,41 +77,6 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createFire(BasicECS ecs, float map_x, float map_z) {
-		AbstractEntity entity = new AbstractEntity(ecs, "Fire");
-
-		PositionComponent posData = new PositionComponent((map_x)+(0.5f), (map_z)+(0.5f));
-		entity.addComponent(posData);
-
-		TextureRegion[][] trs = GraphicsHelper.createSheet("shared/fire.png", 8, 4);
-
-		HasDecal hasDecal = new HasDecal();
-		TextureRegion tr = trs[0][0];
-		hasDecal.decal = Decal.newDecal(tr, true);
-		hasDecal.decal.setScale(1f / tr.getRegionWidth());
-		hasDecal.decal.setPosition(posData.position);
-		hasDecal.faceCamera = true;
-		hasDecal.dontLockYAxis = false;
-		entity.addComponent(hasDecal);
-
-		HasDecalCycle cycle = new HasDecalCycle(.05f, 8*4);
-		int idx = 0;
-		for (int y=0 ; y<trs[0].length ; y++) {
-			for (int x=0 ; x<trs.length ; x++) {
-				cycle.decals[idx] = GraphicsHelper.DecalHelper(trs[x][y], 1);
-				idx++;
-			}
-		}
-		entity.addComponent(cycle);
-
-		CollidesComponent cc = new CollidesComponent(true, .5f);
-		entity.addComponent(cc);
-
-		return entity;	
-
-	}
-
-
 	public static AbstractEntity createNormalExplosion(BasicECS ecs, Vector3 pos) {
 		AbstractEntity entity = new AbstractEntity(ecs, "Explosion");
 
@@ -163,7 +127,7 @@ public class EntityFactory {
 		hasDecal.dontLockYAxis = false;
 		entity.addComponent(hasDecal);
 
-		HasDecalCycle cycle = new HasDecalCycle(.05f, 4*4);
+		HasDecalCycle cycle = new HasDecalCycle(.03f, 4*4);
 		cycle.remove_at_end_of_cycle = true;
 		int idx = 0;
 		for (int y=0 ; y<trs[0].length ; y++) {
@@ -179,7 +143,7 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createDebugSPhere(BasicECS ecs, float x, float y, float z, float diam) {
+	public static AbstractEntity createDebugSphere(BasicECS ecs, float x, float y, float z, float diam) {
 		AbstractEntity e = new AbstractEntity(ecs, "LowWall");
 
 		PositionComponent pos = new PositionComponent(x, y, z);

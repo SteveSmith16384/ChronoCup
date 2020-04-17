@@ -15,6 +15,7 @@ import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.ql.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.ql.QLPlayerData;
+import com.scs.splitscreenfps.game.components.ql.RemoveAtEndOfPhase;
 
 import ssmith.libgdx.GraphicsHelper;
 import ssmith.libgdx.ModelFunctions;
@@ -49,7 +50,7 @@ public class QuantumLeagueEntityFactory {
 			instance.transform.scl(scale);		
 			Vector3 offset = ModelFunctions.getOrigin(instance);
 			offset.y -= .3f; // Hack since model is too high
-			
+
 			HasModelComponent hasModel = new HasModelComponent("Alien", instance, offset, 90, scale);
 			e.addComponent(hasModel);
 
@@ -74,8 +75,16 @@ public class QuantumLeagueEntityFactory {
 		PositionComponent pos = new PositionComponent(start);
 		e.addComponent(pos);
 
+		QLPlayerData playerData = (QLPlayerData)shooter.getComponent(QLPlayerData.class);
+
 		HasDecal hasDecal = new HasDecal();
-		hasDecal.decal = GraphicsHelper.DecalHelper("quantumleague/laser_bolt.png", 0.1f);
+		if (playerData.side == 0) {
+			hasDecal.decal = GraphicsHelper.DecalHelper("quantumleague/laser_bolt_red.png", 0.1f);
+		} else if (playerData.side == 1) {
+			hasDecal.decal = GraphicsHelper.DecalHelper("quantumleague/laser_bolt_blue.png", 0.1f);
+		} else {
+			throw new RuntimeException("Todo");
+		}
 		hasDecal.decal.setPosition(pos.position);
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = false;
@@ -91,11 +100,12 @@ public class QuantumLeagueEntityFactory {
 		cc.dont_collide_with = shooter;
 		e.addComponent(cc);
 
-		QLPlayerData playerData = (QLPlayerData)shooter.getComponent(QLPlayerData.class);
 		e.addComponent(new IsBulletComponent(shooter, playerData.side));
 
 		//No! Fire and forget e.addComponent(new IsRecordable("Bullet", e));
 		BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");
+		
+		e.addComponent(new RemoveAtEndOfPhase());
 
 		return e;
 	}

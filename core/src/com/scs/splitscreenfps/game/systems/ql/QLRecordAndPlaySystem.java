@@ -115,7 +115,8 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 			posData.angle_degs = data.direction;
 		} else if (abstract_data.cmd == AbstractRecordData.CMD_BULLET_FIRED) {
 			BulletFiredRecordData data = (BulletFiredRecordData)abstract_data;
-			AbstractEntity bullet = QuantumLeagueEntityFactory.createBullet(ecs, data.shooter, data.start, data.offset);
+			AbstractEntity shooter = level.getShadow(data.playerIdx, data.phase);
+			AbstractEntity bullet = QuantumLeagueEntityFactory.createBullet(ecs, shooter, data.start, data.offset);
 			ecs.addEntity(bullet);
 		} else if (abstract_data.cmd == AbstractRecordData.CMD_REMOVED) {
 			// Needed?

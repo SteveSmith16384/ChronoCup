@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game.levels;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
@@ -20,6 +21,7 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.ql.IsRecordable;
 import com.scs.splitscreenfps.game.components.ql.QLCanShoot;
 import com.scs.splitscreenfps.game.components.ql.QLPlayerData;
+import com.scs.splitscreenfps.game.components.ql.RemoveAtEndOfPhase;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
@@ -62,8 +64,8 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	}
 
 
-	public AbstractEntity getShadow(int player, int phase) {
-		return this.shadows[player][phase];
+	public AbstractEntity getShadow(int playerIdx, int phase) {
+		return this.shadows[playerIdx][phase];
 	}
 
 
@@ -185,6 +187,15 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 
 	public void startRewindPhase() {
+		// Remove relevant entities
+		Iterator<AbstractEntity> it = game.ecs.getEntityIterator();
+		while (it.hasNext()) {
+			AbstractEntity e = it.next();
+			if (e.getComponent(RemoveAtEndOfPhase.class) != null) {
+				e.remove();
+			}
+		}
+		
 		this.qlRecordAndPlaySystem.startRewind();
 
 		BillBoardFPS_Main.audio.stopMusic();

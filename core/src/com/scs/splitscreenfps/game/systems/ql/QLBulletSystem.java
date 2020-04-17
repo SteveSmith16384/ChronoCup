@@ -48,28 +48,24 @@ public class QLBulletSystem extends AbstractSystem {
 				// Check if shooter is alive
 				QLPlayerData shooterData = (QLPlayerData)bullet.shooter.getComponent(QLPlayerData.class);
 				if (shooterData.health > 0) {
-					QLPlayerData playerData = (QLPlayerData)ents[1].getComponent(QLPlayerData.class);
-					if (playerData.side != bullet.side) {
-						ents[0].remove(); // Remove bullet
-						playerData.health -= 50;
+					QLPlayerData playerHitData = (QLPlayerData)ents[1].getComponent(QLPlayerData.class);
+					// Check if target is alive
+					if (playerHitData.health > 0) {
+						if (playerHitData.side != bullet.side) {
+							ents[0].remove(); // Remove bullet
+							playerHitData.health -= 50;
 
-						if (playerData.health <= 0) {
-							/*HasModelComponent hasModel = (HasModelComponent)ents[1].getComponent(HasModelComponent.class);
-							ModelInstance instance = hasModel.model;
-							for (int i=0 ; i<instance.materials.size ; i++) {
-								instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.WHITE));
-								instance.materials.get(i).set(ColorAttribute.createAmbient(Color.WHITE));
-							}*/
-							QuantumLeagueLevel.setAvatarColour(ents[1], false);
-							
-							BillBoardFPS_Main.audio.startMusic("sfx/qubodup-PowerDrain.ogg");
-							
+							if (playerHitData.health <= 0) {
+								QuantumLeagueLevel.setAvatarColour(ents[1], false);
+
+								BillBoardFPS_Main.audio.startMusic("sfx/qubodup-PowerDrain.ogg");
+							}
+
+							AbstractEntity expl = EntityFactory.createNormalExplosion(ecs, pos.position);
+							ecs.addEntity(expl);
+
+							return;
 						}
-
-						AbstractEntity expl = EntityFactory.createNormalExplosion(ecs, pos.position);
-						ecs.addEntity(expl);
-
-						return;
 					}
 				}
 			}

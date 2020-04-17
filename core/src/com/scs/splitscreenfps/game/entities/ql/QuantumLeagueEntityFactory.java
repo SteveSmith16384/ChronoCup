@@ -1,8 +1,6 @@
 package com.scs.splitscreenfps.game.entities.ql;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;

@@ -21,7 +21,6 @@ import com.scs.splitscreenfps.game.components.HasDecalCycle;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 
 import ssmith.libgdx.GraphicsHelper;
 import ssmith.libgdx.ModelFunctions;
@@ -35,7 +34,7 @@ public class EntityFactory {
 	public static AbstractEntity createRedFilter(BasicECS ecs, int viewId) {
 		AbstractEntity entity = new AbstractEntity(ecs, "RedFilter");
 
-		Texture weaponTex = new Texture(Gdx.files.internal("colours/white.png"));		
+		Texture weaponTex = new Texture(Gdx.files.internal("colours/red.png"));		
 		Sprite sprite = new Sprite(weaponTex);
 		//sprite.setSize(Gdx.graphics.getWidth(),  Gdx.graphics.getHeight());
 		sprite.setColor(1, 0, 0, .5f);
@@ -43,9 +42,22 @@ public class EntityFactory {
 		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0, 0, 1, 1));
 		entity.addComponent(hgsc);
 		hgsc.onlyViewId = viewId;
+		
+		return entity;	
 
-		RemoveEntityAfterTimeComponent rat = new RemoveEntityAfterTimeComponent(3);
-		entity.addComponent(rat);
+	}
+
+
+	public static AbstractEntity createWhiteFilter(BasicECS ecs, int viewId) {
+		AbstractEntity entity = new AbstractEntity(ecs, "WhiteFilter");
+
+		Texture weaponTex = new Texture(Gdx.files.internal("colours/white.png"));		
+		Sprite sprite = new Sprite(weaponTex);
+		sprite.setColor(.5f, .5f, .5f, .5f);
+
+		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0, 0, 1, 1));
+		entity.addComponent(hgsc);
+		hgsc.onlyViewId = viewId;
 
 		return entity;	
 

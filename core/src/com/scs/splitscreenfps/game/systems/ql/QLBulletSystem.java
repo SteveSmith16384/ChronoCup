@@ -10,8 +10,10 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.components.ql.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.ql.QLPlayerData;
+import com.scs.splitscreenfps.game.components.ql.RemoveAtEndOfPhase;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.levels.QuantumLeagueLevel;
 
@@ -58,8 +60,16 @@ public class QLBulletSystem extends AbstractSystem {
 
 							for (int id = 0 ; id<game.players.length ; id++) {
 								if (ents[1] == game.players[id]) {
-									AbstractEntity redfilter = EntityFactory.createRedFilter(game.ecs, id);
-									ecs.addEntity(redfilter);
+									if (playerHitData.health <= 0) {
+										AbstractEntity whitefilter = EntityFactory.createWhiteFilter(game.ecs, id);
+										whitefilter.addComponent(new RemoveAtEndOfPhase());
+										ecs.addEntity(whitefilter);
+									} else {
+										AbstractEntity redfilter = EntityFactory.createRedFilter(game.ecs, id);
+										redfilter.addComponent(new RemoveAtEndOfPhase());
+										entity.addComponent(new RemoveEntityAfterTimeComponent(1));
+										ecs.addEntity(redfilter);
+									}
 									break;
 								}
 							}

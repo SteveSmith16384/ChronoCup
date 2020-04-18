@@ -7,6 +7,7 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
@@ -48,8 +50,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	private final AbstractEntity[][] shadows; // Player, phase
 	public GridPoint2Static spot; // todo - rename
 	public float[] timeOnPoint = new float[game.players.length];
-	//private Sprite crosshairs;
-	
+
 	public QuantumLeagueLevel(Game _game) {
 		super(_game);
 
@@ -66,11 +67,6 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 		this.qlPhaseSystem = new QLPhaseSystem(this);
 		this.qlRecordAndPlaySystem = new QLRecordAndPlaySystem(game.ecs, this);
-		/*
-		Texture weaponTex = new Texture(Gdx.files.internal("quantumleague/crosshairs.png"));		
-		crosshairs = new Sprite(weaponTex);
-		crosshairs.setScale(.01f);
-		*/
 	}
 
 
@@ -83,11 +79,18 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	public void setupAvatars(AbstractEntity player, int playerIdx) {
 		player.addComponent(new QLPlayerData(playerIdx));
 
-		Texture weaponTex = new Texture(Gdx.files.internal("quantumleague/crosshairs.png"));		
+		// Todo - move to where we know size of the map
+		Camera cam = game.players[playerIdx].camera;
+		cam.lookAt(7,  0.4f,  7);
+		cam.update();
+
+		// Add crosshairs
+		/*Texture weaponTex = new Texture(Gdx.files.internal("quantumleague/crosshairs.png"));		
 		Sprite sprite = new Sprite(weaponTex);
 		sprite.setPosition((Gdx.graphics.getWidth()-sprite.getWidth())/2, 0);		
 		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_CARRIED, new Rectangle(0.45f, 0.45f, 0.1f, 0.1f));
 		game.players[playerIdx].addComponent(hgsc);
+		 */
 
 		// Create shadows ready for phase
 		GridPoint2Static start = this.startPositions.get(playerIdx);
@@ -114,7 +117,11 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 	@Override
 	public void load() {
-		loadMapFromFile("quantumleague/map1.csv");
+		if (Settings.SMALL_MAP) {
+			loadMapFromFile("quantumleague/map_small.csv");
+		} else {
+			loadMapFromFile("quantumleague/map1.csv");
+		}
 	}
 
 
@@ -154,7 +161,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 						} else if (token.equals("G")) { // Goal point
 							Floor floor = new Floor(game.ecs, "quantumleague/textures/deploy_sq.png", col, row, 1, 1, false);
 							game.ecs.addEntity(floor);
-							 spot = new GridPoint2Static(col, row);
+							spot = new GridPoint2Static(col, row);
 						} else if (token.equals("B")) { // Border
 							game.mapData.map[col][row].blocked = true;
 							Wall wall = new Wall(game.ecs, "quantumleague/textures/mjst_metal_beamwindow_diffuse.png", col, 0, row, false);
@@ -188,11 +195,11 @@ public class QuantumLeagueLevel extends AbstractLevel {
 		qlRecordAndPlaySystem.process(); // Must be before phase system!
 		this.qlPhaseSystem.process();
 	}
-	
+
 
 	public void renderUI(SpriteBatch batch2d, int viewIndex) {
 		float yOff = game.font_med.getLineHeight() * 1.2f;
-		
+
 		game.font_med.setColor(1, 1, 1, 1);
 		game.font_med.draw(batch2d, "In-Game?: " + this.qlPhaseSystem.isGamePhase(), 10, (yOff*2));
 		game.font_med.draw(batch2d, "Time: " + (int)(this.getCurrentPhaseTime()), 10, (yOff*3));
@@ -207,7 +214,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 		//crosshairs.setPosition(x, y);
 		//batch2d.draw(crosshairs, x, y);
 		crosshairs.draw(batch2d);
-		*/
+		 */
 	}
 
 
@@ -225,7 +232,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 				e.remove();
 			}
 		}
-		
+
 		this.qlRecordAndPlaySystem.startRewind();
 
 		BillBoardFPS_Main.audio.stopMusic();
@@ -249,7 +256,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 			}
 		}
 	}
-	
+
 
 	public void nextGamePhase() {
 		BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
@@ -288,8 +295,14 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	public void allPhasesOver() {
 		this.game.ecs.removeSystem(QLPhaseSystem.class);
 		this.game.ecs.removeSystem(QLRecordAndPlaySystem.class);
-		// todo - calc winner and game over
-		game.playerHasWon(null);
+
+		if (this.timeOnPoint[0] == this.timeOnPoint[1]) {
+			game.playerHasWon(null);
+		} else if (this.timeOnPoint[0] < this.timeOnPoint[1]) {
+			game.playerHasWon(game.players[1]);
+		} else {
+			game.playerHasWon(game.players[0]);
+		}
 	}
 
 

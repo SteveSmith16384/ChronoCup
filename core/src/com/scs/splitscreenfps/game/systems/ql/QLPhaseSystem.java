@@ -29,7 +29,7 @@ public class QLPhaseSystem implements ISystem {
 			if (current_time > Settings.GAME_PHASE_DURATION) {
 				this.game_phase = false;
 				if (phase_num_012 <= 1) {
-					Settings.p("Rewind phase!");
+					//Settings.p("Rewind phase!");
 					game_phase = false;
 					qlLevel.startRewindPhase();
 				} else {

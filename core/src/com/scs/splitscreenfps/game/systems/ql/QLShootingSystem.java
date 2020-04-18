@@ -50,7 +50,7 @@ public class QLShootingSystem extends AbstractSystem {
 		if (isShootPressed(player.inputMethod)) {
 			if (cc.ammo == 0) {
 				BillBoardFPS_Main.audio.play("sfx/gun_reload_lock_or_click_sound.wav");			
-				Settings.p("Reloading");
+				//Settings.p("Reloading");
 				cc.ammo = 6;
 			}
 			//Settings.p("Shot!");

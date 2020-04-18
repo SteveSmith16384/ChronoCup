@@ -67,7 +67,7 @@ public class QLBulletSystem extends AbstractSystem {
 									} else {
 										AbstractEntity redfilter = EntityFactory.createRedFilter(game.ecs, id);
 										redfilter.addComponent(new RemoveAtEndOfPhase());
-										entity.addComponent(new RemoveEntityAfterTimeComponent(1));
+										redfilter.addComponent(new RemoveEntityAfterTimeComponent(1));
 										ecs.addEntity(redfilter);
 									}
 									break;

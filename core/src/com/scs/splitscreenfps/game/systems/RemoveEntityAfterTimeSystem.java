@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 
 public class RemoveEntityAfterTimeSystem extends AbstractSystem {
@@ -21,6 +22,7 @@ public class RemoveEntityAfterTimeSystem extends AbstractSystem {
 
 		hdc.timeRemaining_secs -= dt;
 		if(hdc.timeRemaining_secs <= 0) {
+			Settings.p("Removed " + entity);
 			entity.remove();
 		}
 	}

@@ -13,7 +13,7 @@ public class Settings {
 	
 	// Debugging Hacks
 	public static final boolean DEBUG_START_POS = !RELEASE_MODE && false;
-	public static final boolean AUTO_START = !RELEASE_MODE && false;
+	public static final boolean AUTO_START = !RELEASE_MODE && true;
 	public static final boolean SMALL_MAP = !RELEASE_MODE && false;
 	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;
 	public static final boolean SHOW_FPS = !RELEASE_MODE && false;
@@ -27,7 +27,7 @@ public class Settings {
 	public static final float PLAYER_HEIGHT = 0.52f;
 	public static final float CAM_OFFSET = 0.14f;
 	public static final String TITLE = "Chrono Cup";
-	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 1024;
+	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 512;
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
 
 	public static Properties prop;

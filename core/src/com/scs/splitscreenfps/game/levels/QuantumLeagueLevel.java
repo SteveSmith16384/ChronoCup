@@ -196,13 +196,13 @@ public class QuantumLeagueLevel extends AbstractLevel {
 		float yOff = game.font_med.getLineHeight() * 1.2f;
 
 		game.font_med.setColor(1, 1, 1, 1);
-		game.font_med.draw(batch2d, "In-Game?: " + this.qlPhaseSystem.isGamePhase(), 10, (yOff*2));
-		game.font_med.draw(batch2d, "Time: " + (int)(this.getCurrentPhaseTime()), 10, (yOff*3));
-		game.font_med.draw(batch2d, "Phase: " + (int)(this.qlPhaseSystem.getPhaseNum012()), 10, (yOff*4));
+		//game.font_med.draw(batch2d, "In-Game?: " + this.qlPhaseSystem.isGamePhase(), 10, (yOff*2));
+		game.font_med.draw(batch2d, "Time: " + (int)(this.getCurrentPhaseTime()), 10, (yOff*2));
+		game.font_med.draw(batch2d, "Phase: " + (int)(this.qlPhaseSystem.getPhaseNum012()), 10, (yOff*3));
 
 		QLPlayerData playerData = (QLPlayerData)game.players[viewIndex].getComponent(QLPlayerData.class);
-		game.font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, (yOff*5));
-		game.font_med.draw(batch2d, this.scoreSystem.getHudText(playerData.side), 10, (yOff*6));
+		game.font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, (yOff*4));
+		game.font_med.draw(batch2d, this.scoreSystem.getHudText(playerData.side), 10, (yOff*5));
 	}
 
 

@@ -52,7 +52,7 @@ public class EntityFactory {
 
 		Texture weaponTex = new Texture(Gdx.files.internal("colours/white.png"));		
 		Sprite sprite = new Sprite(weaponTex);
-		sprite.setColor(.5f, .5f, .5f, .5f);
+		sprite.setColor(.8f, .8f, .8f, .3f);
 
 		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0, 0, 1, 1));
 		entity.addComponent(hgsc);

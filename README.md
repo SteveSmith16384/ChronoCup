@@ -1,5 +1,5 @@
 # Chrono Cup
-A 1-4 player split-screen multiplayer FPS with time-rewinding mechanics.
+A split-screen multiplayer FPS with time-rewinding game mechanics.
 
 * Gameplay video: https://youtu.be/Xsq16HTg9p8
 
@@ -8,8 +8,8 @@ A 1-4 player split-screen multiplayer FPS with time-rewinding mechanics.
 * Press Space at the start to use keyboard/mouse, or press X on your controller to use that.
 * Esc to exit back to the start, or to quit out.
 
-* W, A S, D, Space and Enter for keyboard & mouse player.
-* Tested with PS4 controllers.
+* W, A S, D for keyboard & mouse player.
+* Tested with PS4 controllers: R2 to shoot
 * F1 - Toggle full Screen
 * F2 - Toggle full screen but still windowed (required if you want to record the screen using Windows)
 
@@ -53,4 +53,6 @@ This project uses the MIT licence.  See LICENCE.txt.
 * Airhorn taken from http://soundbible.com/1542-Air-Horn.html
 
 
+## Become a Patron!
+Well, it's worth a try: https://www.patreon.com/bePatron?u=3406199
 

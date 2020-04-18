@@ -45,13 +45,10 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 		Collections.sort(dataToBePlayedBack, new Comparator<AbstractRecordData>() {
 			@Override
 			public int compare(AbstractRecordData s1, AbstractRecordData s2) {
-				/*if (s1.phase != s2.phase) {
-					return s1.phase - s2.phase;
-				}*/
 				return s1.time >= s2.time ? 1 : -1;
 			} 
 		});
-		Settings.p("Sorted");
+		//Settings.p("Sorted");
 	}
 
 

@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.graphics.GL20;
@@ -58,7 +59,7 @@ public class PreGameScreen implements IModule {
 			this.appendToLog("WARNING! Game in debug mode!");
 		}
 		//this.appendToLog("Looking for controllers...");
-		this.appendToLog("Press SPACE to play with keyboard/mouse");
+		this.appendToLog("Click mouse to play with keyboard/mouse");
 		this.appendToLog("Press X to play with controller");
 		this.appendToLog("F1 to toggle full-screen");
 		this.appendToLog("To S to start once all players have joined!");
@@ -180,9 +181,9 @@ public class PreGameScreen implements IModule {
 
 
 	private void readKeyboard() {
-		if (Gdx.input.isKeyJustPressed(Keys.SPACE) && keyboard_player_joined == false) {
+		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && keyboard_player_joined == false) {
 			this.keyboard_player_joined = true;
-			this.appendToLog("Keyboard player joined!");
+			this.appendToLog("Mouse/Keyboard player joined!");
 		} else if (Gdx.input.isKeyJustPressed(Keys.S)) {
 			this.startGame();
 		}

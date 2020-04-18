@@ -26,7 +26,6 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.input.ControllerInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
-import com.scs.splitscreenfps.game.input.NoInputMethod;
 
 public class PreGameScreen implements IModule {
 

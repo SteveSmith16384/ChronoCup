@@ -1,17 +1,10 @@
 package com.scs.splitscreenfps;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Graphics.DisplayMode;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
-import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.input.IInputMethod;
-import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
-import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.game.systems.AudioSystem;
 import com.scs.splitscreenfps.pregame.PreGameScreen;
 

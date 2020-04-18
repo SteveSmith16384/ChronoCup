@@ -1,7 +1,6 @@
 package com.scs.splitscreenfps.game.input;
 
 import com.badlogic.gdx.controllers.Controller;
-import com.scs.splitscreenfps.Settings;
 
 public class ControllerInputMethod implements IInputMethod {
 

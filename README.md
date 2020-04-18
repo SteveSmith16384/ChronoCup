@@ -49,7 +49,8 @@ This project uses the MIT licence.  See LICENCE.txt.
 * Shot sfx by Michael Klier taken from https://opengameart.org/content/futuristic-shotgun
 * Explosion sfx by Iwan Gabovitch taken from https://opengameart.org/content/dull-explosion
 * De-sync sfx taken from https://opengameart.org/content/energy-drain
-
+* Majestical textures by Robert Yang, based on concepts by Randy Reddig and Adam Foster.
+* Airhorn taken from http://soundbible.com/1542-Air-Horn.html
 
 
 

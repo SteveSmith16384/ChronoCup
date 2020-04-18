@@ -43,7 +43,7 @@ public class QLPhaseSystem implements ISystem {
 
 
 	public void startGamePhase() {
-		Settings.p("Game phase!");
+		//Settings.p("Game phase!");
 		this.game_phase = true;
 		current_time = 0;
 		phase_num_012++;

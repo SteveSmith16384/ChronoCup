@@ -1,27 +1,21 @@
 package com.scs.splitscreenfps.game.levels;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.math.Rectangle;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
-import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.ql.IsRecordable;
@@ -44,7 +38,6 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 	public static Properties prop;
 
-	private List<String> instructions = new ArrayList<String>(); 
 	public QLPhaseSystem qlPhaseSystem;
 	public QLRecordAndPlaySystem qlRecordAndPlaySystem;
 	private final AbstractEntity[][] shadows; // Player, phase
@@ -60,8 +53,6 @@ public class QuantumLeagueLevel extends AbstractLevel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}*/
-
-		instructions.add("Todo");
 
 		this.shadows = new AbstractEntity[game.players.length][2];
 
@@ -259,6 +250,8 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 
 	public void nextGamePhase() {
+		BillBoardFPS_Main.audio.play("sfx/AirHorn.wav");
+
 		BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
 
 		this.qlRecordAndPlaySystem.loadNewRecordData();
@@ -310,8 +303,9 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	public void startGame() {
 		this.qlPhaseSystem.startGamePhase();
 
-		BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
+		BillBoardFPS_Main.audio.play("sfx/AirHorn.wav");
 
+		BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
 	}
 
 

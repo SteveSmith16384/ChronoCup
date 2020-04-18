@@ -36,7 +36,6 @@ public class EntityFactory {
 
 		Texture weaponTex = new Texture(Gdx.files.internal("colours/red.png"));		
 		Sprite sprite = new Sprite(weaponTex);
-		//sprite.setSize(Gdx.graphics.getWidth(),  Gdx.graphics.getHeight());
 		sprite.setColor(1, 0, 0, .5f);
 
 		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0, 0, 1, 1));
@@ -81,11 +80,7 @@ public class EntityFactory {
 		hasModel.always_draw = true;
 		entity.addComponent(hasModel);
 
-		//CollidesComponent cc = new CollidesComponent(true, instance);
-		//entity.addComponent(cc);
-
 		return entity;
-
 	}
 
 

@@ -1,14 +1,27 @@
 # Chrono Cup
-A 1-4 player split-screen multiplayer games.
+A 1-4 player split-screen multiplayer FPS with time-rewinding mechanics.
+
+* Tech demo video 1: https://www.youtube.com/watch?v=9waAQ32TXmU
+
 
 ## Controls
 * Press Space at the start to use keyboard/mouse, or press X on your controller to use that.
 * Esc to exit back to the start, or to quit out.
 
-* W, A S, D, Space and Enter for keyboard & mouse player.  H for Help (where implemented).
+* W, A S, D, Space and Enter for keyboard & mouse player.
 * Tested with PS4 controllers.
 * F1 - Toggle full Screen
 * F2 - Toggle full screen but still windowed (required if you want to record the screen using Windows)
+
+
+## How to Play
+Okay, brace yourself: This may sound complicated, but once you know it all, it's quite straightforward:
+
+* The winner is the player who spends most time on the central point.
+* There are 3 phases.  During the first phase, it's just you and your opponent shooting at each other.
+* During the second phase, you each can move around freely again, but there is a ghost replaying all your moves from the previous phase.
+* If you get "killed" (or "de-syncd"), you are still alive, but you (or your echo's) bullets have no effect.  However, movement and shooting are still recorded for playback during the next phase.
+* Only avatars that are "alive" can register on the central point.
 
 
 ## Notes for other Developers
@@ -31,4 +44,12 @@ This project uses the MIT licence.  See LICENCE.txt.
 ### Assets Credits
 * All humanoid figures by Quaternius http://quaternius.com
 * Alien by Quaternius
+* Music by  Ville Nousiainen (http://soundcloud.com/mutkanto)
+* Replenish Life Force Copyright 2013 Iwan Gabovitch http://freesound.org/people/qubodup/
+* Shot sfx by Michael Klier taken from https://opengameart.org/content/futuristic-shotgun
+* Explosion sfx by Iwan Gabovitch taken from https://opengameart.org/content/dull-explosion
+* De-sync sfx taken from https://opengameart.org/content/energy-drain
+
+
+
 

@@ -159,7 +159,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 							Floor floor = new Floor(game.ecs, "quantumleague/textures/corridor.jpg", col, row, 1, 1, false);
 							game.ecs.addEntity(floor);
 						} else if (token.equals("G")) { // Goal point
-							Floor floor = new Floor(game.ecs, "quantumleague/textures/deploy_sq.png", col, row, 1, 1, false);
+							Floor floor = new Floor(game.ecs, "quantumleague/textures/centre.png", col, row, 1, 1, false);
 							game.ecs.addEntity(floor);
 							spot = new GridPoint2Static(col, row);
 						} else if (token.equals("B")) { // Border

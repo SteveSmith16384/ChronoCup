@@ -1,7 +1,7 @@
 # Chrono Cup
 A 1-4 player split-screen multiplayer FPS with time-rewinding mechanics.
 
-* Tech demo video 1: https://www.youtube.com/watch?v=9waAQ32TXmU
+* Gameplay video: https://youtu.be/Xsq16HTg9p8
 
 
 ## Controls

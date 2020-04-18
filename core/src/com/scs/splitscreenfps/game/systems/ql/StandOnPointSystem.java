@@ -24,7 +24,9 @@ public class StandOnPointSystem extends AbstractSystem {
 		if ((int)posData.position.x == level.spot.x) {
 			if ((int)posData.position.z == level.spot.y) {
 				QLPlayerData playerData = (QLPlayerData)entity.getComponent(QLPlayerData.class); 
-				level.timeOnPoint[playerData.side] += Gdx.graphics.getDeltaTime();
+				if (playerData.health > 0) {
+					level.timeOnPoint[playerData.side] += Gdx.graphics.getDeltaTime();
+				}
 			}
 		}
 	}

@@ -26,6 +26,8 @@ import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.ql.QuantumLeagueEntityFactory;
+import com.scs.splitscreenfps.game.gamemodes.IScoreSystem;
+import com.scs.splitscreenfps.game.gamemodes.LastPlayerOnPointScoreSystem;
 import com.scs.splitscreenfps.game.systems.ql.QLBulletSystem;
 import com.scs.splitscreenfps.game.systems.ql.QLPhaseSystem;
 import com.scs.splitscreenfps.game.systems.ql.QLRecordAndPlaySystem;
@@ -42,11 +44,13 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	public QLRecordAndPlaySystem qlRecordAndPlaySystem;
 	private final AbstractEntity[][] shadows; // Player, phase
 	public GridPoint2Static spot; // todo - rename
-	public float[] timeOnPoint = new float[game.players.length];
+	public IScoreSystem scoreSystem;
 
 	public QuantumLeagueLevel(Game _game) {
 		super(_game);
 
+		scoreSystem = new LastPlayerOnPointScoreSystem(game);
+		
 		prop = new Properties();
 		/*try {
 			prop.load(new FileInputStream("quantumleague/ql_config.txt"));
@@ -198,14 +202,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 		QLPlayerData playerData = (QLPlayerData)game.players[viewIndex].getComponent(QLPlayerData.class);
 		game.font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, (yOff*5));
-		game.font_med.draw(batch2d, "Score: " + (int)(this.timeOnPoint[playerData.side]), 10, (yOff*6));
-		/*
-		int x = (int)game.viewports[viewIndex].viewPos.getCenterX();
-		int y = (int)game.viewports[viewIndex].viewPos.getCenterY();
-		//crosshairs.setPosition(x, y);
-		//batch2d.draw(crosshairs, x, y);
-		crosshairs.draw(batch2d);
-		 */
+		game.font_med.draw(batch2d, this.scoreSystem.getHudText(playerData.side), 10, (yOff*6));
 	}
 
 
@@ -288,18 +285,9 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	public void allPhasesOver() {
 		this.game.ecs.removeSystem(QLPhaseSystem.class);
 		this.game.ecs.removeSystem(QLRecordAndPlaySystem.class);
+		
+		game.playerHasWon(this.scoreSystem.getWinningPlayer());
 
-		if (game.players.length > 1) {
-			if ((int)this.timeOnPoint[0] == (int)this.timeOnPoint[1]) {
-				game.playerHasWon(null);
-			} else if ((int)this.timeOnPoint[0] < (int)this.timeOnPoint[1]) {
-				game.playerHasWon(game.players[1]);
-			} else {
-				game.playerHasWon(game.players[0]);
-			}
-		} else {
-			game.playerHasWon(game.players[0]);
-		}
 	}
 
 

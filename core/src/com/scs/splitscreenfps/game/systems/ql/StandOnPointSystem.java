@@ -1,6 +1,5 @@
 package com.scs.splitscreenfps.game.systems.ql;
 
-import com.badlogic.gdx.Gdx;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
@@ -25,7 +24,7 @@ public class StandOnPointSystem extends AbstractSystem {
 			if ((int)posData.position.z == level.spot.y) {
 				QLPlayerData playerData = (QLPlayerData)entity.getComponent(QLPlayerData.class); 
 				if (playerData.health > 0) {
-					level.timeOnPoint[playerData.side] += Gdx.graphics.getDeltaTime();
+					level.scoreSystem.playerIsOnPoint(playerData.side);
 				}
 			}
 		}

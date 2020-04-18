@@ -7,8 +7,6 @@ import com.scs.splitscreenfps.game.levels.QuantumLeagueLevel;
 
 public class QLPhaseSystem implements ISystem {
 
-	private static final long GAME_PHASE_DURATION = 10;
-
 	private QuantumLeagueLevel qlLevel;
 	private boolean game_phase; // otherwise, rewind phase
 	private float current_time;
@@ -28,7 +26,7 @@ public class QLPhaseSystem implements ISystem {
 	public void process() {
 		if (this.game_phase) {
 			current_time += Gdx.graphics.getDeltaTime();
-			if (current_time > GAME_PHASE_DURATION) {
+			if (current_time > Settings.GAME_PHASE_DURATION) {
 				this.game_phase = false;
 				if (phase_num_012 <= 1) {
 					Settings.p("Rewind phase!");

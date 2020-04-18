@@ -39,7 +39,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		this.addComponent(new MovementData());
 		this.addComponent(new PositionComponent());
-		this.addComponent(new CanCarryComponent(playerIdx));
+		//this.addComponent(new CanCarryComponent(playerIdx));
 
 		// Model stuff
 		this.addModel(playerIdx, modelType);
@@ -47,7 +47,6 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		this.addComponent(new CollidesComponent(false, .3f));
 
 		camera = _viewportData.camera;
-
 		cameraController = new PersonCameraController(camera, inputMethod);
 		
 		QuantumLeagueLevel.setAvatarColour(this, true);

@@ -148,12 +148,18 @@ public class Game implements IModule {
 
 
 	@Override
-	public void render() {
+	public void render() {   // this.players
+		if (Settings.DEBUG_START_POS) {
+			PositionComponent posData = (PositionComponent)players[0].getComponent(PositionComponent.class);
+			Settings.p("Pos=" + posData.position);
+		}
+		
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			if (Settings.AUTO_START) {
 				System.exit(0);
 				return;
 			}
+			BillBoardFPS_Main.audio.stopMusic();
 			this.main.next_module = new PreGameScreen(main);
 		}
 

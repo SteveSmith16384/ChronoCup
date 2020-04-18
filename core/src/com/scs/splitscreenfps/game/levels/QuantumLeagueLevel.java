@@ -289,10 +289,14 @@ public class QuantumLeagueLevel extends AbstractLevel {
 		this.game.ecs.removeSystem(QLPhaseSystem.class);
 		this.game.ecs.removeSystem(QLRecordAndPlaySystem.class);
 
-		if (this.timeOnPoint[0] == this.timeOnPoint[1]) {
-			game.playerHasWon(null);
-		} else if (this.timeOnPoint[0] < this.timeOnPoint[1]) {
-			game.playerHasWon(game.players[1]);
+		if (game.players.length > 1) {
+			if (this.timeOnPoint[0] == this.timeOnPoint[1]) {
+				game.playerHasWon(null);
+			} else if (this.timeOnPoint[0] < this.timeOnPoint[1]) {
+				game.playerHasWon(game.players[1]);
+			} else {
+				game.playerHasWon(game.players[0]);
+			}
 		} else {
 			game.playerHasWon(game.players[0]);
 		}

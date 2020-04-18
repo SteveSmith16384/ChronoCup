@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game.input;
 
 import com.badlogic.gdx.controllers.Controller;
+import com.scs.splitscreenfps.Settings;
 
 public class ControllerInputMethod implements IInputMethod {
 
@@ -78,6 +79,20 @@ public class ControllerInputMethod implements IInputMethod {
 	@Override
 	public boolean isR1Pressed() {
 		return this.controller.getButton(10); // todo - check	
+	}
+
+
+	@Override
+	public boolean isR2Pressed() {
+		/*
+		for (int i=0 ; i<16 ; i++) { // todo - remove
+			if (this.controller.getButton(i)) {
+				Settings.p("Pressed! " + i);
+			}
+		}
+		*/
+		//Settings.p("Pressed! " + this.controller.getAxis(5));
+		return this.controller.getAxis(5) > 0.5f;
 	}
 
 

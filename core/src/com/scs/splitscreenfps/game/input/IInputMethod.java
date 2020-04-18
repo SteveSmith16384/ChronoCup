@@ -32,6 +32,8 @@ public interface IInputMethod {
 
 	boolean isR1Pressed();
 	
+	boolean isR2Pressed();
+	
 	boolean isKeyJustPressed(int key);
 
 	boolean isKeyPressed(int key);

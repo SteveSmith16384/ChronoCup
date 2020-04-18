@@ -62,7 +62,7 @@ public class PreGameScreen implements IModule {
 		this.appendToLog("Click mouse to play with keyboard/mouse");
 		this.appendToLog("Press X to play with controller");
 		this.appendToLog("F1 to toggle full-screen");
-		this.appendToLog("To S to start once all players have joined!");
+		this.appendToLog("To SPACE to start once all players have joined!");
 	}
 
 
@@ -160,7 +160,7 @@ public class PreGameScreen implements IModule {
 		font_small.setColor(0,  1,  1,  1);
 		int x = (int)(Gdx.graphics.getWidth() * 0.7f);
 		y = (int)(Gdx.graphics.getHeight()*.3f);
-		font_small.draw(batch2d, "PRESS S TO START!", x, y);
+		font_small.draw(batch2d, "PRESS SPACE TO START!", x, y);
 
 		batch2d.end();
 

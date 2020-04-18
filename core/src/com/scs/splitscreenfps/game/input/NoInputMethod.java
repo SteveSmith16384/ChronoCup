@@ -91,4 +91,9 @@ public class NoInputMethod implements IInputMethod {
 	public boolean isKeyPressed(int key) {
 		return false;
 	}
+
+	@Override
+	public boolean isR2Pressed() {
+		return false;
+	}
 }

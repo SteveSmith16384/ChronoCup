@@ -171,11 +171,6 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 				EntityMovedRecordData data = new EntityMovedRecordData(isRecordable.playerIdx, entity, this.level.qlPhaseSystem.getPhaseNum012(), currentPhaseTime, posData.position, posData.angle_degs);
 				//data.cam_dir = camera.direction;
 				this.dataBeingRecordedThisPhase.add(data);
-
-				/*if (posData.position.x == 7) {
-					Settings.p("Wrong!");
-				}*/
-
 			}
 		}
 	}

@@ -169,6 +169,18 @@ public class QuantumLeagueLevel extends AbstractLevel {
 				row++;
 			}
 		}
+		
+		// White lines
+		Floor floor1 = new Floor(game.ecs, "Floor", "colours/white.png", 1.5f, .001f, 1.5f, this.map_width-3, .04f);
+		game.ecs.addEntity(floor1);
+		Floor floor2 = new Floor(game.ecs, "Floor", "colours/white.png", 1.5f, .001f, (this.map_height/2)+.5f, this.map_width-3, .04f);
+		game.ecs.addEntity(floor2);
+		Floor floor3 = new Floor(game.ecs, "Floor", "colours/white.png", 1.5f, .001f, this.map_height-1.5f, this.map_width-3, .04f);
+		game.ecs.addEntity(floor3);
+		Floor floor4 = new Floor(game.ecs, "Floor", "colours/white.png", 1.5f, .001f, 1.5f, .04f, this.map_height - 3f);
+		game.ecs.addEntity(floor4);
+		Floor floor5 = new Floor(game.ecs, "Floor", "colours/white.png",  this.map_width-1.5f, .001f, 1.5f, .04f, this.map_height - 3f);
+		game.ecs.addEntity(floor5);
 	}
 
 

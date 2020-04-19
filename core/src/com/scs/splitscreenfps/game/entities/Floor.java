@@ -91,7 +91,7 @@ public class Floor extends AbstractEntity {
 	}
 
 
-	public Floor(BasicECS ecs, String name, String tex_filename1, float x, float z, float w, float d) {
+	public Floor(BasicECS ecs, String name, String tex_filename1, float x, float y, float z, float w, float d) {
 		super(ecs, name);
 
 		Texture tex = new Texture(tex_filename1);
@@ -111,7 +111,7 @@ public class Floor extends AbstractEntity {
 		Matrix3 mat = new Matrix3();
 		floor.meshes.get(0).transformUV(mat);
 
-		ModelInstance instance = new ModelInstance(floor, new Vector3(x, 0, z));
+		ModelInstance instance = new ModelInstance(floor, new Vector3(x, y, z));
 		//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);
 		//instance.calculateTransforms();
 
@@ -147,4 +147,5 @@ public class Floor extends AbstractEntity {
 		HasModelComponent model = new HasModelComponent("Floor", instance);
 		this.addComponent(model);
 	}
+	
 }

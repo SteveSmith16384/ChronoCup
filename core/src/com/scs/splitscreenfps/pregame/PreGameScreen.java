@@ -54,14 +54,16 @@ public class PreGameScreen implements IModule {
 		this.appendToLog("Welcome to " + Settings.TITLE);
 
 		this.appendToLog("v" + Settings.VERSION);
-		if (Settings.RELEASE_MODE == false) {
+		/*if (Settings.RELEASE_MODE == false) {
 			this.appendToLog("WARNING! Game in debug mode!");
-		}
+		}*/
 		//this.appendToLog("Looking for controllers...");
 		this.appendToLog("Click mouse to play with keyboard/mouse");
 		this.appendToLog("Press X to play with controller");
 		this.appendToLog("F1 to toggle full-screen");
 		this.appendToLog("To SPACE to start once all players have joined!");
+
+		BillBoardFPS_Main.audio.startMusic("sfx/battleThemeA.mp3");
 	}
 
 

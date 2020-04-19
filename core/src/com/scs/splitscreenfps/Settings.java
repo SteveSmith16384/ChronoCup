@@ -13,7 +13,7 @@ public class Settings {
 	
 	// Debugging Hacks
 	public static final boolean DEBUG_START_POS = !RELEASE_MODE && false;
-	public static final boolean AUTO_START = !RELEASE_MODE && true;
+	public static final boolean AUTO_START = !RELEASE_MODE && false;
 	public static final boolean SMALL_MAP = !RELEASE_MODE && false;
 	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;
 	public static final boolean SHOW_FPS = !RELEASE_MODE && false;

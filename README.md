@@ -44,7 +44,8 @@ This project uses the MIT licence.  See LICENCE.txt.
 ### Assets Credits
 * All humanoid figures by Quaternius http://quaternius.com
 * Alien by Quaternius
-* Music by  Ville Nousiainen (http://soundcloud.com/mutkanto)
+* Pre-game music by cynicmusic.com pixelsphere.org, taken from https://opengameart.org/content/battle-theme-a
+* In-game music by  Ville Nousiainen (http://soundcloud.com/mutkanto)
 * Replenish Life Force Copyright 2013 Iwan Gabovitch http://freesound.org/people/qubodup/
 * Shot sfx by Michael Klier taken from https://opengameart.org/content/futuristic-shotgun
 * Explosion sfx by Iwan Gabovitch taken from https://opengameart.org/content/dull-explosion

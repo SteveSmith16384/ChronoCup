@@ -159,7 +159,7 @@ public class Game implements IModule {
 				System.exit(0);
 				return;
 			}
-			BillBoardFPS_Main.audio.stopMusic();
+			//BillBoardFPS_Main.audio.stopMusic();
 			this.main.next_module = new PreGameScreen(main);
 		}
 

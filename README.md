@@ -52,7 +52,7 @@ This project uses the MIT licence.  See LICENCE.txt.
 * De-sync sfx taken from https://opengameart.org/content/energy-drain
 * Majestical textures by Robert Yang, based on concepts by Randy Reddig and Adam Foster.
 * Airhorn taken from http://soundbible.com/1542-Air-Horn.html
-
+* Join game sfx by SFX by Cleyton Kauffman - https://soundcloud.com/cleytonkauffman
 
 ## Become a Patron!
 Well, it's worth a try: https://www.patreon.com/bePatron?u=3406199

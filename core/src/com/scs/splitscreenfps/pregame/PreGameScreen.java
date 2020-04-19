@@ -185,6 +185,7 @@ public class PreGameScreen implements IModule {
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && keyboard_player_joined == false) {
 			this.keyboard_player_joined = true;
 			this.appendToLog("Mouse/Keyboard player joined!");
+			BillBoardFPS_Main.audio.play("sfx/Plug-in.wav");
 		} else if (Gdx.input.isKeyJustPressed(Keys.S) || Gdx.input.isKeyJustPressed(Keys.SPACE)) {
 			this.startGame();
 		}

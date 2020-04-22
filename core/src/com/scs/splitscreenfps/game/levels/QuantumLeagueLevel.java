@@ -50,7 +50,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 		super(_game);
 
 		scoreSystem = new LastPlayerOnPointScoreSystem(game);
-		
+
 		prop = new Properties();
 		/*try {
 			prop.load(new FileInputStream("quantumleague/ql_config.txt"));
@@ -142,19 +142,21 @@ public class QuantumLeagueLevel extends AbstractLevel {
 					for (String token : tokens) {
 						if (token.equals("S")) { // Start pos
 							this.startPositions.add(new GridPoint2Static(col, row));
-							Floor floor = new Floor(game.ecs, "quantumleague/textures/corridor.jpg", col, row, 1, 1, false);
-							game.ecs.addEntity(floor);
+							//Floor floor = new Floor(game.ecs, "quantumleague/textures/corridor.jpg", col, row, 1, 1, false);
+							//game.ecs.addEntity(floor);
 						} else if (token.equals("W")) { // Wall
 							game.mapData.map[col][row].blocked = true;
-							Wall wall = new Wall(game.ecs, "quantumleague/textures/ufo2_03.png", col, 0, row, false);
+							Wall wall = new Wall(game.ecs, "quantumleague/textures/set3_example_1.png", col, 0, row, false);
 							game.ecs.addEntity(wall);
 						} else if (token.equals("C")) { // Chasm
 							game.mapData.map[col][row].blocked = true;
 						} else if (token.equals("F")) { // Floor
-							Floor floor = new Floor(game.ecs, "quantumleague/textures/corridor.jpg", col, row, 1, 1, false);
-							game.ecs.addEntity(floor);
+							if ((col-1) % 4 == 0 && (row-1)  % 4 == 0) {
+								Floor floor = new Floor(game.ecs, "Floor", "quantumleague/textures/floor006.png", col, row, 4, 4);
+								game.ecs.addEntity(floor);
+							}
 						} else if (token.equals("G")) { // Goal point
-							Floor floor = new Floor(game.ecs, "quantumleague/textures/centre.png", col, row, 1, 1, false);
+							Floor floor = new Floor(game.ecs, "Centre", "quantumleague/textures/centre.png", col, .01f, row, 1, 1);
 							game.ecs.addEntity(floor);
 							spot = new GridPoint2Static(col, row);
 						} else if (token.equals("B")) { // Border
@@ -169,17 +171,18 @@ public class QuantumLeagueLevel extends AbstractLevel {
 				row++;
 			}
 		}
-		
+
+		float thickness = .1f;
 		// White lines
-		Floor floor1 = new Floor(game.ecs, "Floor", "colours/white.png", 1.5f, .001f, 1.5f, this.map_width-3, .04f);
+		Floor floor1 = new Floor(game.ecs, "Floor", "colours/white.png", 1.5f, .001f, 1.5f, this.map_width-3, thickness);
 		game.ecs.addEntity(floor1);
-		Floor floor2 = new Floor(game.ecs, "Floor", "colours/white.png", 1.5f, .001f, (this.map_height/2)+.5f, this.map_width-3, .04f);
+		Floor floor2 = new Floor(game.ecs, "Floor", "colours/white.png", 1.5f, .001f, (this.map_height/2)+.5f, this.map_width-3, thickness);
 		game.ecs.addEntity(floor2);
-		Floor floor3 = new Floor(game.ecs, "Floor", "colours/white.png", 1.5f, .001f, this.map_height-1.5f, this.map_width-3, .04f);
+		Floor floor3 = new Floor(game.ecs, "Floor", "colours/white.png", 1.5f, .001f, this.map_height-1.5f, this.map_width-3, thickness);
 		game.ecs.addEntity(floor3);
-		Floor floor4 = new Floor(game.ecs, "Floor", "colours/white.png", 1.5f, .001f, 1.5f, .04f, this.map_height - 3f);
+		Floor floor4 = new Floor(game.ecs, "Floor", "colours/white.png", 1.5f, .001f, 1.5f, thickness, this.map_height - 3f);
 		game.ecs.addEntity(floor4);
-		Floor floor5 = new Floor(game.ecs, "Floor", "colours/white.png",  this.map_width-1.5f, .001f, 1.5f, .04f, this.map_height - 3f);
+		Floor floor5 = new Floor(game.ecs, "Floor", "colours/white.png",  this.map_width-1.5f, .001f, 1.5f, thickness, this.map_height - 3f);
 		game.ecs.addEntity(floor5);
 	}
 
@@ -297,7 +300,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	public void allPhasesOver() {
 		this.game.ecs.removeSystem(QLPhaseSystem.class);
 		this.game.ecs.removeSystem(QLRecordAndPlaySystem.class);
-		
+
 		game.playerHasWon(this.scoreSystem.getWinningPlayer());
 
 	}

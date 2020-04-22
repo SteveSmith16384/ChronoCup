@@ -120,6 +120,35 @@ public class Floor extends AbstractEntity {
 	}
 
 
+	public Floor(BasicECS ecs, String name, String tex_filename1, float x, float z, float w, float d) {
+		super(ecs, name);
+
+		Texture tex = new Texture(tex_filename1);
+		//tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
+
+		ModelBuilder modelBuilder = new ModelBuilder();
+		Model floor = modelBuilder.createRect(
+				0f,0f, (float) d,
+				(float)w, 0f, (float)d,
+				(float)w, 0f, 0f,
+				0f,0f,0f,
+				1f,1f,1f,
+				white_material,
+				VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+
+		Matrix3 mat = new Matrix3();
+		floor.meshes.get(0).transformUV(mat);
+
+		ModelInstance instance = new ModelInstance(floor, new Vector3(x, 0, z));
+		//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);
+		//instance.calculateTransforms();
+
+		HasModelComponent model = new HasModelComponent("Floor", instance);
+		this.addComponent(model);
+	}
+
+
 	public Floor(BasicECS ecs, String name, Pixmap pixmap, float x, float z, float w, float d) {
 		super(ecs, name);
 

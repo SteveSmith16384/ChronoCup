@@ -37,10 +37,6 @@ public class PickupDropSystem extends AbstractSystem {
 			return;
 		}
 		if (cc.carrying == null) {
-			//CollisionCheckSystem collCheckSystem = (CollisionCheckSystem)game.ecs.getSystem(CollisionCheckSystem.class);
-			//CollisionResultsList crl = collCheckSystem.collided(entity, 0, 0, false);
-			//for (CollisionResult cr : crl.results) { // todo - check events instead
-			//AbstractEntity key = cr.collidedWith;
 			List<AbstractEvent> it = ecs.getEventsForEntity(EventCollision.class, carrier);
 			for (AbstractEvent e : it) {
 				EventCollision evt = (EventCollision)e;

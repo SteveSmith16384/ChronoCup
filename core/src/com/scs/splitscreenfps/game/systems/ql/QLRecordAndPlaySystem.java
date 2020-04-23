@@ -118,7 +118,7 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 		} else if (abstract_data.cmd == AbstractRecordData.CMD_REMOVED) {
 			// Needed?
 		} else {
-			throw new RuntimeException("Todo");
+			throw new RuntimeException("Unknown event type: " + abstract_data.cmd);
 		}
 	}
 

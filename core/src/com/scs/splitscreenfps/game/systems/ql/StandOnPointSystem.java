@@ -20,8 +20,8 @@ public class StandOnPointSystem extends AbstractSystem {
 
 	public void processEntity(AbstractEntity entity) {
 		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
-		if ((int)posData.position.x == level.spot.x) {
-			if ((int)posData.position.z == level.spot.y) {
+		if ((int)posData.position.x == level.centre_spot.x) {
+			if ((int)posData.position.z == level.centre_spot.y) {
 				QLPlayerData playerData = (QLPlayerData)entity.getComponent(QLPlayerData.class); 
 				if (playerData.health > 0) {
 					level.scoreSystem.playerIsOnPoint(playerData.side);

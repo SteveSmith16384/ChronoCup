@@ -6,7 +6,7 @@ import com.scs.splitscreenfps.game.Game;
 public class LastPlayerOnPointScoreSystem implements IScoreSystem {
 
 	private Game game;
-	public int last_side_on_point = -1;
+	private int last_side_on_point = -1;
 	
 	public LastPlayerOnPointScoreSystem(Game _game) {
 		game = _game;
@@ -14,11 +14,11 @@ public class LastPlayerOnPointScoreSystem implements IScoreSystem {
 	
 
 	@Override
-	public AbstractEntity getWinningPlayer() {
-		if (this.last_side_on_point >= 0) {
+	public int getWinningPlayer() {
+		/*if (this.last_side_on_point >= 0) {
 			return game.players[this.last_side_on_point];
-		}
-		return null;
+		}*/
+		return last_side_on_point;
 	}
 
 

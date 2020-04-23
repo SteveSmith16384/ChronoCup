@@ -91,7 +91,7 @@ public class QuantumLeagueEntityFactory {
 				hasDecal.decal = GraphicsHelper.DecalHelper("quantumleague/laser_bolt_blue_desync.png", 0.1f);
 			}
 		} else {
-			throw new RuntimeException("Todo");
+			throw new RuntimeException("Invalid side: " + playerData.side);
 		}
 		hasDecal.decal.setPosition(pos.position);
 		hasDecal.faceCamera = true;

@@ -84,7 +84,8 @@ public class ControllerInputMethod implements IInputMethod {
 	@Override
 	public boolean isR2Pressed() {
 		/*
-		for (int i=0 ; i<16 ; i++) { // todo - remove
+		// Code for testing buttons
+		for (int i=0 ; i<16 ; i++) {
 			if (this.controller.getButton(i)) {
 				Settings.p("Pressed! " + i);
 			}

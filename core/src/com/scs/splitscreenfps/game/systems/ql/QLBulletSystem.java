@@ -77,7 +77,7 @@ public class QLBulletSystem extends AbstractSystem {
 							if (playerHitData.health <= 0) {
 								QuantumLeagueLevel.setAvatarColour(ents[1], false);
 
-								BillBoardFPS_Main.audio.startMusic("sfx/qubodup-PowerDrain.ogg");
+								BillBoardFPS_Main.audio.play("sfx/qubodup-PowerDrain.ogg");
 							}
 
 							AbstractEntity expl = EntityFactory.createNormalExplosion(ecs, pos.position);

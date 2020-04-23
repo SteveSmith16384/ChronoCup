@@ -7,24 +7,24 @@ import com.scs.splitscreenfps.game.Game;
 public class TotalTimeScoreSystem implements IScoreSystem {
 	
 	private Game game;
-	public float[] timeOnPoint = new float[game.players.length];
+	private float[] timeOnPoint = new float[game.players.length];
 	
 	public TotalTimeScoreSystem(Game _game) {
 		game = _game;
 	}
 
 	@Override
-	public AbstractEntity getWinningPlayer() {
+	public int getWinningPlayer() {
 		if (game.players.length > 1) {
 			if ((int)this.timeOnPoint[0] == (int)this.timeOnPoint[1]) {
-				return null;
+				return -1;
 			} else if ((int)this.timeOnPoint[0] < (int)this.timeOnPoint[1]) {
-				return game.players[1];
+				return 1;
 			} else {
-				return game.players[0];
+				return 0;
 			}
 		} else {
-			return game.players[0];
+			return 0;
 		}
 	}
 

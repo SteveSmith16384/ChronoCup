@@ -43,7 +43,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	public QLPhaseSystem qlPhaseSystem;
 	public QLRecordAndPlaySystem qlRecordAndPlaySystem;
 	private final AbstractEntity[][] shadows; // Player, phase
-	public GridPoint2Static spot; // todo - rename
+	public GridPoint2Static centre_spot;
 	public IScoreSystem scoreSystem;
 
 	public QuantumLeagueLevel(Game _game) {
@@ -101,7 +101,14 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 	@Override
 	public void setBackgroundColour() {
-		Gdx.gl.glClearColor(.6f, .6f, 1, 1);
+		int winning_side = this.scoreSystem.getWinningPlayer();
+		if (winning_side == 0) {
+			Gdx.gl.glClearColor(1f, .3f, .3f, 1);
+		} else if (winning_side == 1) {
+			Gdx.gl.glClearColor(.3f, .3f, 1, 1);
+		} else {
+			Gdx.gl.glClearColor(.6f, .6f, 1, 1);
+		}
 	}
 
 
@@ -158,7 +165,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 						} else if (token.equals("G")) { // Goal point
 							Floor floor = new Floor(game.ecs, "Centre", "quantumleague/textures/centre.png", col, .01f, row, 1, 1);
 							game.ecs.addEntity(floor);
-							spot = new GridPoint2Static(col, row);
+							centre_spot = new GridPoint2Static(col, row);
 						} else if (token.equals("B")) { // Border
 							game.mapData.map[col][row].blocked = true;
 							Wall wall = new Wall(game.ecs, "quantumleague/textures/mjst_metal_beamwindow_diffuse.png", col, 0, row, false);
@@ -301,7 +308,12 @@ public class QuantumLeagueLevel extends AbstractLevel {
 		this.game.ecs.removeSystem(QLPhaseSystem.class);
 		this.game.ecs.removeSystem(QLRecordAndPlaySystem.class);
 
-		game.playerHasWon(this.scoreSystem.getWinningPlayer());
+		int winning_side = this.scoreSystem.getWinningPlayer(); 
+		AbstractEntity player = null;
+		if (winning_side >= 0) {
+			player = game.players[winning_side];
+		}
+		game.playerHasWon(player);
 
 	}
 

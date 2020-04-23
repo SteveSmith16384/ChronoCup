@@ -4,7 +4,7 @@ import com.scs.basicecs.AbstractEntity;
 
 public interface IScoreSystem {
 	
-	AbstractEntity getWinningPlayer();
+	int getWinningPlayer();
 	
 	void playerIsOnPoint(int side);
 

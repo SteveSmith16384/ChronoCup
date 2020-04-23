@@ -26,6 +26,7 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.input.ControllerInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
+import com.scs.splitscreenfps.game.input.NoInputMethod;
 
 public class PreGameScreen implements IModule {
 
@@ -106,6 +107,9 @@ public class PreGameScreen implements IModule {
 			Array<Controller> allControllers = this.controllerManager.getAllControllers();
 			for (Controller c : allControllers) {
 				inputs.add(new ControllerInputMethod(c));
+			}
+			if (inputs.size() == 1) {
+				inputs.add(new NoInputMethod());
 			}
 			main.next_module = new Game(main, inputs);
 			return;

@@ -2,6 +2,7 @@
 A split-screen multiplayer FPS with time-rewinding game mechanics.
 
 * Gameplay video: https://youtu.be/Xsq16HTg9p8
+* Download release: https://stephensmith.itch.io/chrono-cup
 
 
 ## Controls
@@ -53,6 +54,7 @@ This project uses the MIT licence.  See LICENCE.txt.
 * Majestical textures by Robert Yang, based on concepts by Randy Reddig and Adam Foster.
 * Airhorn taken from http://soundbible.com/1542-Air-Horn.html
 * Join game sfx by SFX by Cleyton Kauffman - https://soundcloud.com/cleytonkauffman
+
 
 ## Become a Patron!
 Well, it's worth a try: https://www.patreon.com/bePatron?u=3406199

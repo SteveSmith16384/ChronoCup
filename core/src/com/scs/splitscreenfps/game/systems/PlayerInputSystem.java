@@ -2,7 +2,6 @@ package com.scs.splitscreenfps.game.systems;
 
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.levels.QuantumLeagueLevel;
 
 public class PlayerInputSystem implements ISystem {
 
@@ -15,7 +14,7 @@ public class PlayerInputSystem implements ISystem {
 
 	@Override
 	public void process() {
-		QuantumLeagueLevel level = (QuantumLeagueLevel)game.currentLevel;
+		//QuantumLeagueLevel level = (QuantumLeagueLevel)game.currentLevel;
 		//if (level.qlPhaseSystem.isGamePhase()) { stops rewind working if added?
 			for (int i=0 ; i<game.players.length ; i++) {
 				if (game.players[i] != null) {

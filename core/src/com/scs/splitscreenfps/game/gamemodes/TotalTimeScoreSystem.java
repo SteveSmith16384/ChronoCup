@@ -1,7 +1,6 @@
 package com.scs.splitscreenfps.game.gamemodes;
 
 import com.badlogic.gdx.Gdx;
-import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
 
 public class TotalTimeScoreSystem implements IScoreSystem {

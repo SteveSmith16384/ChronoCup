@@ -1,6 +1,5 @@
 package com.scs.splitscreenfps.game.gamemodes;
 
-import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
 
 public class LastPlayerOnPointScoreSystem implements IScoreSystem {

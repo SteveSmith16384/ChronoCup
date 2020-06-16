@@ -54,25 +54,25 @@ public class QLBulletSystem extends AbstractSystem {
 					QLPlayerData playerHitData = (QLPlayerData)ents[1].getComponent(QLPlayerData.class);
 					// Check if target is alive
 					if (playerHitData.health > 0) {
-						if (playerHitData.side != bullet.side) {
+						if (playerHitData.playerIdx != bullet.side) {
 							ents[0].remove(); // Remove bullet
 							playerHitData.health -= 50;
 
-							for (int id = 0 ; id<game.players.length ; id++) {
-								if (ents[1] == game.players[id]) {
+							//for (int id = 0 ; id<game.players.length ; id++) {
+								//if (ents[1] == game.players[id]) {
 									if (playerHitData.health <= 0) {
-										AbstractEntity whitefilter = EntityFactory.createWhiteFilter(game.ecs, id);
+										AbstractEntity whitefilter = EntityFactory.createWhiteFilter(game.ecs, playerHitData.playerIdx);
 										whitefilter.addComponent(new RemoveAtEndOfPhase());
 										ecs.addEntity(whitefilter);
 									} else {
-										AbstractEntity redfilter = EntityFactory.createRedFilter(game.ecs, id);
+										AbstractEntity redfilter = EntityFactory.createRedFilter(game.ecs, playerHitData.playerIdx);
 										redfilter.addComponent(new RemoveAtEndOfPhase());
 										redfilter.addComponent(new RemoveEntityAfterTimeComponent(1));
 										ecs.addEntity(redfilter);
 									}
-									break;
-								}
-							}
+									//break;
+								//}
+							//}
 
 							if (playerHitData.health <= 0) {
 								QuantumLeagueLevel.setAvatarColour(ents[1], false);

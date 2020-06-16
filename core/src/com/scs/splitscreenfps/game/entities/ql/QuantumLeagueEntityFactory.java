@@ -78,20 +78,20 @@ public class QuantumLeagueEntityFactory {
 		QLPlayerData playerData = (QLPlayerData)shooter.getComponent(QLPlayerData.class);
 
 		HasDecal hasDecal = new HasDecal();
-		if (playerData.side == 0) {
+		if (playerData.playerIdx == 0) {
 			if (playerData.health > 0) {
 				hasDecal.decal = GraphicsHelper.DecalHelper("quantumleague/laser_bolt_red.png", 0.1f);
 			} else {
 				hasDecal.decal = GraphicsHelper.DecalHelper("quantumleague/laser_bolt_red_desync.png", 0.1f);
 			}
-		} else if (playerData.side == 1) {
+		} else if (playerData.playerIdx == 1) {
 			if (playerData.health > 0) {
 			hasDecal.decal = GraphicsHelper.DecalHelper("quantumleague/laser_bolt_blue.png", 0.1f);
 			} else {
 				hasDecal.decal = GraphicsHelper.DecalHelper("quantumleague/laser_bolt_blue_desync.png", 0.1f);
 			}
 		} else {
-			throw new RuntimeException("Invalid side: " + playerData.side);
+			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
 		}
 		hasDecal.decal.setPosition(pos.position);
 		hasDecal.faceCamera = true;
@@ -108,7 +108,7 @@ public class QuantumLeagueEntityFactory {
 		cc.dont_collide_with = shooter;
 		e.addComponent(cc);
 
-		e.addComponent(new IsBulletComponent(shooter, playerData.side));
+		e.addComponent(new IsBulletComponent(shooter, playerData.playerIdx));
 
 		//No! Fire and forget e.addComponent(new IsRecordable("Bullet", e));
 		BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");

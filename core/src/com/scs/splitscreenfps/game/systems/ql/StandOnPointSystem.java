@@ -24,7 +24,7 @@ public class StandOnPointSystem extends AbstractSystem {
 			if ((int)posData.position.z == level.centre_spot.y) {
 				QLPlayerData playerData = (QLPlayerData)entity.getComponent(QLPlayerData.class); 
 				if (playerData.health > 0) {
-					level.scoreSystem.playerIsOnPoint(playerData.side);
+					level.scoreSystem.playerIsOnPoint(playerData.playerIdx);
 				}
 			}
 		}

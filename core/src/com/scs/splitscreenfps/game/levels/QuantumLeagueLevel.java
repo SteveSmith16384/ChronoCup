@@ -195,7 +195,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 
 	@Override
-	public void addSystems(BasicECS ecs) {
+	public void addSystems(BasicECS ecs) { // todo - move to Game
 		ecs.addSystem(new QLBulletSystem(ecs, game));
 		ecs.addSystem(new QLShootingSystem(ecs, game, this));
 		ecs.addSystem(new StandOnPointSystem(ecs, this));
@@ -204,7 +204,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 
 	@Override
-	public void update() {
+	public void update() { // todo - move to Game
 		game.ecs.processSystem(QLBulletSystem.class);
 		game.ecs.processSystem(QLShootingSystem.class);
 		game.ecs.processSystem(StandOnPointSystem.class);
@@ -224,7 +224,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 		QLPlayerData playerData = (QLPlayerData)game.players[viewIndex].getComponent(QLPlayerData.class);
 		game.font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, (yOff*4));
-		game.font_med.draw(batch2d, this.scoreSystem.getHudText(playerData.side), 10, (yOff*5));
+		game.font_med.draw(batch2d, this.scoreSystem.getHudText(playerData.playerIdx), 10, (yOff*5));
 	}
 
 

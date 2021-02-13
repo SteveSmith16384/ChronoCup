@@ -63,7 +63,7 @@ public class Game implements IModule {
 	private DrawModelSystem drawModelSystem;
 
 	public int currentViewId;
-	public AssetManager assetManager = new AssetManager();
+	public AssetManager assetManager = new AssetManager(); // todo - use this!
 
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		main = _main;

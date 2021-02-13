@@ -36,7 +36,6 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		this.addComponent(new MovementData());
 		this.addComponent(new PositionComponent());
-		//this.addComponent(new CanCarryComponent(playerIdx));
 
 		// Model stuff
 		this.addModel(playerIdx, modelType);
@@ -70,12 +69,6 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			anim.animationController = animation;
 			this.addComponent(anim);
 
-			/*
-			for (int i=0 ; i<instance.materials.size ; i++) {
-				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.BLACK));
-				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.BLACK));
-			}
-			*/
 			return instance;
 		}
 		case 1:
